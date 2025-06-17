@@ -1,4 +1,4 @@
-package com.onaonline.lami.lami_backend.rideoptions.security;
+package com.onaonline.lami.lami_backend.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

@@ -1,5 +1,6 @@
 package com.onaonline.lami.lami_backend.rideoptions.taxi;
 
+import com.onaonline.lami.lami_backend.rideoptions.Ride;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -7,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-public class TaxiResource {
+public class TaxiResource extends Ride {
 
     @GetMapping("/taxi")
     public Map<String, Object> taxi() {

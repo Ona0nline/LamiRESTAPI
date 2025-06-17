@@ -1,4 +1,4 @@
-package com.onaonline.lami.lami_backend.rideoptions.home;
+package com.onaonline.lami.lami_backend.home;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;

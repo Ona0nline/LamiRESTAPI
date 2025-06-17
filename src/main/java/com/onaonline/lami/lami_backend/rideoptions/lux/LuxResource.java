@@ -1,12 +1,13 @@
 package com.onaonline.lami.lami_backend.rideoptions.lux;
 
+import com.onaonline.lami.lami_backend.rideoptions.Ride;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
 @RestController
-public class LuxResource {
+public class LuxResource extends Ride {
 
     @GetMapping("/luxury")
     public Map<String, String> luxury() {
