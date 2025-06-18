@@ -18,7 +18,7 @@ public class Configuration {
             public void addCorsMappings(CorsRegistry registry) {
 //            Cross origin requests aka requests from different ports
                 registry.addMapping("/**") // Allow all endpoints
-                        .allowedOrigins("http://localhost:3000") // Allow React dev server
+                        .allowedOrigins("http://localhost:3001") // Allow React dev server
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowCredentials(true);
             }
