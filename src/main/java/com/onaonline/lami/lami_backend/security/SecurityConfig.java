@@ -16,8 +16,8 @@ public class SecurityConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/home", "/lami").permitAll()
-                        .anyRequest().authenticated()
+                        .requestMatchers("/home", "/lami", "/h2-console/**").permitAll()
+                        .anyRequest().permitAll()
                 )
                 .build();
     }
