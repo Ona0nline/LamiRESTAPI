@@ -31,34 +31,4 @@ public class UserDetails {
     public UserDetails() {
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPhone_number() {
-        return phone_number;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    @Override
-    public String toString() {
-        return "UserDetails{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", email='" + email + '\'' +
-                ", phone_number='" + phone_number + '\'' +
-                ", location='" + location + '\'' +
-                '}';
-    }
 }

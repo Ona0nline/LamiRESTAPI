@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.NumberFormat;
 
 //Creates constructors for you
 @Data
@@ -14,7 +13,7 @@ import org.springframework.format.annotation.NumberFormat;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Home {
+public class UserValidation {
     @NotBlank(message = "Username cannot be blank.")
     private String username;
     @NotBlank(message = "Email is required.")
