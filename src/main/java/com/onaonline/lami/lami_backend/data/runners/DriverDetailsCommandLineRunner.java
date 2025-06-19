@@ -1,5 +1,7 @@
-package com.onaonline.lami.lami_backend.data;
+package com.onaonline.lami.lami_backend.data.runners;
 
+import com.onaonline.lami.lami_backend.data.DriverDetails;
+import com.onaonline.lami.lami_backend.data.repos.DriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -44,12 +46,9 @@ public class DriverDetailsCommandLineRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-//        opppurrtunity for lamda expression usage
-//        driverRepository.save(driverDetails.get(0));
-        driverDetails.stream().forEach(driverDetail -> driverRepository.save(driverDetail));
-//        driverDetails.stream().map(driverDetail -> driverRepository.save(driverDetail)).forEach(System.out::println);
 
-//        driverRepository.save(driverDetails.get(0));
+        driverDetails.stream().forEach(driverDetail -> driverRepository.save(driverDetail));
+
 
     }
 }

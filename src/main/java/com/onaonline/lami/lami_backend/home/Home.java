@@ -1,24 +1,42 @@
 package com.onaonline.lami.lami_backend.home;
 
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
+import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.NumberFormat;
 
-@RestController
+//Creates constructors for you
+@Data
+//Contains thevalidation annotatoins
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Home {
+    @NotBlank(message = "Username cannot be blank.")
+    private String username;
+    @NotBlank(message = "Email is required.")
+    @Email
+    private String email;
+    @NotBlank(message = "Phone number is required")
+    @Size(min = 10, max = 10, message = "Number must be 10 digits")
+    private String phone_number;
+    @NotBlank(message = "Password cannot be empty")
+    @Size(min = 8, message = "Password must not be less than 8 characters.")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,20}$")
+    private String password;
+    @NotBlank
+    private String confirmPassword;
+    @NotBlank(message = "User location is needed.")
+    private String location;
 
-    @GetMapping("/home")
-    public Map<Object, Object> homePageHero(){
-        return Map.of(
-                "title", "Welcome to Lami",
-                "subheading", "A ridesharing app for all tiers of users",
-                "rides", Map.of("" +
-                        "lami", "Lami",
-                        "taxi", "Taxi",
-                        "lux", "Luxury"),
-                "footer", "click here to find out more about them"
-        );
+    @AssertTrue(message = "Passwords must match")
+    public boolean isPasswordMatching(){
+        return password.equals(confirmPassword);
     }
+
+
+
 }
