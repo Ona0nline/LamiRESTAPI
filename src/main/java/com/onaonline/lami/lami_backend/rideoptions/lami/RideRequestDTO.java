@@ -1,4 +1,4 @@
-package com.onaonline.lami.lami_backend.rideoptions;
+package com.onaonline.lami.lami_backend.rideoptions.lami;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

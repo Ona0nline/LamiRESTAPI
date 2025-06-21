@@ -29,15 +29,15 @@ public class UserValidationResource {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserValidation> signup(@Valid @RequestBody UserValidation validhome){
-        return ResponseEntity.ok(homeService.signup(validhome));
+    public ResponseEntity<SignUpDTO> signup(@Valid @RequestBody SignUpDTO signUpDTO){
+        return ResponseEntity.ok(homeService.signup(signUpDTO));
 
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody UserValidation user){
+    public ResponseEntity<String> login(@Valid @RequestBody LoginDTO loginDTO){
 //    Response entity returns http responses (status, headers and body)
-        if(homeService.login(user.getEmail(), user.getPassword())){
+        if(homeService.login(loginDTO.getEmail(), loginDTO.getPassword())){
             return ResponseEntity.ok("Login Successful");
         }
         return ResponseEntity.status(401).body("Unauthorized login");

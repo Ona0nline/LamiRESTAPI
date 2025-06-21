@@ -4,7 +4,6 @@ import com.onaonline.lami.lami_backend.data.LamiDriverDetails;
 import com.onaonline.lami.lami_backend.data.RideDetails;
 import com.onaonline.lami.lami_backend.data.repos.LamiDriverRepository;
 import com.onaonline.lami.lami_backend.data.repos.RideRepository;
-import com.onaonline.lami.lami_backend.rideoptions.Ride;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

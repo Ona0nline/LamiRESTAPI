@@ -27,21 +27,22 @@ public class UserValidationService {
                 "footer", "click here to find out more about them"
         );
     }
-    public UserValidation signup(UserValidation validrequest){
+    public SignUpDTO signup(SignUpDTO signuprequest){
 //    var eliminates middle man step of having to make a object of a class to pass into database - springboot
         try{
             var user = UserDetails.builder().
-                    username(validrequest.getUsername())
-                    .email(validrequest.getEmail())
-                    .phone_number(validrequest.getPhone_number())
-                    .password(validrequest.getPassword()).build();
+                    username(signuprequest.getUsername())
+                    .email(signuprequest.getEmail())
+                    .phone_number(signuprequest.getPhone_number())
+                    .password(signuprequest.getPassword()).
+                    location(signuprequest.getLocation()).build();
 
             userRepository.save(user);
         }
         catch (Exception e){
-            System.out.println(validrequest.toString());
+            System.out.println(signuprequest.toString());
         }
-        return validrequest;
+        return signuprequest;
 
     }
 
