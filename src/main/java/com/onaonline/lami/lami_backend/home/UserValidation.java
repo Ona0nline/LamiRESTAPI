@@ -29,6 +29,7 @@ public class UserValidation {
     @NotBlank
     private String confirmPassword;
     @NotBlank(message = "User location is needed.")
+    @NotNull
     private String location;
 
     @AssertTrue(message = "Passwords must match")

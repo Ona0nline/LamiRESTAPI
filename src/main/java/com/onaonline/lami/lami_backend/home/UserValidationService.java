@@ -48,8 +48,8 @@ public class UserValidationService {
 
 //        if (optionalpassword.isEmpty()) return false;
 
-        if(!optionalemail.isEmpty()){
-            return true ? optionalpassword.toString().equals(password) : false;
+        if(optionalemail.isPresent()){
+            return optionalpassword.toString().equals(password);
         }
         return true;
 
