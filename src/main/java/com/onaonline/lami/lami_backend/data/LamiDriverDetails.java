@@ -11,7 +11,7 @@ public class LamiDriverDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    private long id;
+    public long id;
     @Getter
     private String drivername;
     @Getter

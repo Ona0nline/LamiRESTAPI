@@ -16,10 +16,9 @@ public class RideDetails {
     private String startLocation;
     private String endLocation;
     private String fare;
-
     //    Relationship between tables
     @ManyToOne
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
-    private LamiLuxDriverDetails driver;
+    public LamiDriverDetails driver;
 
 }

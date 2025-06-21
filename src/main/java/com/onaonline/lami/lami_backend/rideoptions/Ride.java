@@ -21,7 +21,7 @@ public abstract class Ride {
     private String endLocation;
     @Getter
     @Setter
-    private Long driverid;
+    public Long driverid;
     @Getter
     @Setter
     private Long fare;

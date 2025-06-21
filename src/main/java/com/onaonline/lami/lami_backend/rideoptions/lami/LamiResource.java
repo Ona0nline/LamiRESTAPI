@@ -1,5 +1,6 @@
 package com.onaonline.lami.lami_backend.rideoptions.lami;
 
+import com.onaonline.lami.lami_backend.data.RideDetails;
 import com.onaonline.lami.lami_backend.data.UserDetails;
 import com.onaonline.lami.lami_backend.home.UserValidation;
 import com.onaonline.lami.lami_backend.rideoptions.Ride;
@@ -19,11 +20,17 @@ public class LamiResource extends Ride {
     @Autowired
     private LamiService lamiService;
 
-    @PostMapping("/lami/request-ride")
+    @PostMapping("/lami/available-rides")
     public ResponseEntity<Object> availablerides(@RequestBody RideRequestDTO rideRequest) {
         List<Map<String, Object>> results = lamiService.displayavailablerides(rideRequest.getStartLocation(), rideRequest.getEndLocation());
         if (results.isEmpty()) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(results);
+    }
+
+
+    @PostMapping("/lami/request-ride")
+    public ResponseEntity<RideDetails> requestride(@RequestBody Lami lami) {
+        return ResponseEntity.ok(lamiService.bookride(lami));
     }
 
 
