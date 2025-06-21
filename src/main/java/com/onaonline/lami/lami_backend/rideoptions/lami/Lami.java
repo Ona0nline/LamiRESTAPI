@@ -1,4 +1,10 @@
 package com.onaonline.lami.lami_backend.rideoptions.lami;
 
-public class Lami {
+import com.onaonline.lami.lami_backend.rideoptions.Ride;
+
+public class Lami extends Ride {
+
+
+
 }
+

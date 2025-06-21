@@ -1,78 +1,53 @@
 package com.onaonline.lami.lami_backend.data;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Getter;
 
 @Entity
-public class DriverDetails {
+public class LamiDriverDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private long id;
+    @Getter
     private String drivername;
+    @Getter
     private String driveridnumber;
+    @Getter
     private String phonenumber;
+    @Getter
     private String email;
-    private boolean is_availiable;
+    @Getter
+    private boolean availiable;
+    @Getter
     private String car;
+    @Getter
     private String license_plate;
+    @Getter
     private String location;
+    @Getter
     private String ride_status;
 
-    public DriverDetails(Long id, String drivername, String driveridnumber, String phonenumber, String email, boolean is_availiable, String car, String license_plate, String location, String ride_status) {
-        this.id = id;
+
+    public LamiDriverDetails( String drivername, String driveridnumber, String phonenumber, String email, boolean availiable, String car, String license_plate, String location, String ride_status) {
         this.drivername = drivername;
         this.driveridnumber = driveridnumber;
         this.phonenumber = phonenumber;
         this.email = email;
-        this.is_availiable = is_availiable;
+        this.availiable = availiable;
         this.car = car;
         this.license_plate = license_plate;
         this.location = location;
         this.ride_status = ride_status;
     }
 
-    public DriverDetails() {
+    public LamiDriverDetails() {
 
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public String getDrivername() {
-        return drivername;
-    }
-
-    public String getDriveridnumber() {
-        return driveridnumber;
-    }
-
-    public String getPhonenumber() {
-        return phonenumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public boolean isIs_availiable() {
-        return is_availiable;
-    }
-
-    public String getCar() {
-        return car;
-    }
-
-    public String getLicense_plate() {
-        return license_plate;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public String getRide_status() {
-        return ride_status;
-    }
 
     @Override
     public String toString() {
@@ -82,7 +57,7 @@ public class DriverDetails {
                 ", driveridnumber='" + driveridnumber + '\'' +
                 ", phonenumber='" + phonenumber + '\'' +
                 ", email='" + email + '\'' +
-                ", is_availiable=" + is_availiable +
+                ", is_availiable=" + availiable +
                 ", car='" + car + '\'' +
                 ", license_plate='" + license_plate + '\'' +
                 ", location='" + location + '\'' +

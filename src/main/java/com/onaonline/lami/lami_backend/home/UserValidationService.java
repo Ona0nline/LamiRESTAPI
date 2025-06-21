@@ -29,15 +29,20 @@ public class UserValidationService {
     }
     public UserValidation signup(UserValidation validrequest){
 //    var eliminates middle man step of having to make a object of a class to pass into database - springboot
-        var user = UserDetails.builder().
-                username(validrequest.getUsername())
-                .email(validrequest.getEmail())
-                .phone_number(validrequest.getPhone_number())
-                .password(validrequest.getPassword()).build();
+        try{
+            var user = UserDetails.builder().
+                    username(validrequest.getUsername())
+                    .email(validrequest.getEmail())
+                    .phone_number(validrequest.getPhone_number())
+                    .password(validrequest.getPassword()).build();
 
-        userRepository.save(user);
-
+            userRepository.save(user);
+        }
+        catch (Exception e){
+            System.out.println(validrequest.toString());
+        }
         return validrequest;
+
     }
 
 
