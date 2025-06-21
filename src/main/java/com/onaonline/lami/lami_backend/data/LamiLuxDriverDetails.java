@@ -4,10 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -15,32 +12,21 @@ import java.util.List;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter @Setter
 public class LamiLuxDriverDetails {
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Getter
     private String drivername;
-    @Getter
     private String driveridnumber;
-    @Getter
     private String phonenumber;
-    @Getter
     private String email;
-    @Getter
     private boolean is_availiable;
-    @Getter
     private String car;
-    @Getter
     private String license_plate;
-    @Getter
     private String location;
-    @Getter
     private String ride_status;
-    @Getter
     private List<String> perks;
-    @Getter
     private String driverlevel;
 
 

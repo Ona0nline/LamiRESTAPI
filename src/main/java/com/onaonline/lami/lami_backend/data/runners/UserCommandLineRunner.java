@@ -11,18 +11,6 @@ import java.util.List;
 @Component
 public class UserCommandLineRunner implements Runnable {
 
-    private static List<UserDetails> userDetails = new ArrayList<>();
-    private UserRepository userRepository;
-
-    static {
-        userDetails.add(new UserDetails());
-    }
-
-    @Autowired
-    public UserCommandLineRunner(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
 
     @Override
     public void run() {

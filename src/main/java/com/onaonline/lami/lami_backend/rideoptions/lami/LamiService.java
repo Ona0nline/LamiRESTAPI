@@ -15,7 +15,6 @@ import java.util.Map;
 @Service
 public class LamiService {
 
-    private Ride ride;
     @Autowired
     private LamiDriverRepository lamiDriverRepository;
     @Autowired
@@ -27,7 +26,6 @@ public class LamiService {
         ArrayList<Map<String, Object>> availabledrivers = new ArrayList<>();
 
         if(!nearbyDrivers.isEmpty()){
-
             for (LamiDriverDetails driver : nearbyDrivers) {
                 availabledrivers.add(Map.of(
                         "id", driver.getId(),
@@ -46,15 +44,11 @@ public class LamiService {
 
     public RideDetails bookride(Lami lami) {
 
-//        Assuming I am not getting a list but getting a single object
         if (lami.getDriverid() == null) {
             throw new RuntimeException("Driver ID is missing from the request.");
         }
         LamiDriverDetails driver = lamiDriverRepository.findById(lami.getDriverid())
                 .orElseThrow(() -> new RuntimeException("Driver not found"));
-        lami.setStartLocation(lami.getStartLocation());
-        lami.setEndLocation(lami.getEndLocation());
-        lami.setFare(lami.getFare());
 
         RideDetails confirmedRide = RideDetails.builder()
                 .startLocation(lami.getStartLocation())

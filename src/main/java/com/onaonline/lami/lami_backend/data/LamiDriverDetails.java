@@ -5,30 +5,22 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter @Setter
 public class LamiDriverDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
     public long id;
-    @Getter
     private String drivername;
-    @Getter
     private String driveridnumber;
-    @Getter
     private String phonenumber;
-    @Getter
     private String email;
-    @Getter
     private boolean availiable;
-    @Getter
     private String car;
-    @Getter
     private String license_plate;
-    @Getter
     private String location;
-    @Getter
     private String ride_status;
 
 
