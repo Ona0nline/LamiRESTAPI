@@ -1,4 +1,4 @@
-package com.onaonline.lami.lami_backend.data;
+package com.onaonline.lami.lami_backend.data.details;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

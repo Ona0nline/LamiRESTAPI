@@ -1,6 +1,6 @@
 package com.onaonline.lami.lami_backend.rideoptions.lami;
 
-import com.onaonline.lami.lami_backend.data.RideDetails;
+import com.onaonline.lami.lami_backend.data.details.RideDetails;
 import com.onaonline.lami.lami_backend.rideoptions.Ride;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
-package com.onaonline.lami.lami_backend.data;
+package com.onaonline.lami.lami_backend.data.details;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +19,10 @@ public class UserDetails {
     private String username;
     private String email;
     private String phone_number;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String location;
 
     public UserDetails(Long id,String username, String email, String phone_number, String password, String location) {

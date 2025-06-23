@@ -1,7 +1,7 @@
 package com.onaonline.lami.lami_backend.home;
 
-//import com.onaonline.lami.lami_backend.data.UserDetails;
-import com.onaonline.lami.lami_backend.data.UserDetails;
+//import com.onaonline.lami.lami_backend.data.details.UserDetails;
+import com.onaonline.lami.lami_backend.data.details.UserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -42,6 +41,19 @@ public class UserValidationResource {
             return ResponseEntity.ok("Login Successful");
         }
         return ResponseEntity.status(401).body("Unauthorized login");
+
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> delete(@RequestBody LoginDTO logintodeleteDTO){
+
+        boolean loginState = homeService.login(logintodeleteDTO.getEmail(), logintodeleteDTO.getPassword());
+        if (loginState) {
+            Long userid = homeService.deleteById(logintodeleteDTO.getEmail());
+            return ResponseEntity.ok(userid);
+
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed or user not found.");
 
     }
 

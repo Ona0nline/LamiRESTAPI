@@ -1,6 +1,6 @@
 package com.onaonline.lami.lami_backend.data.repos;
 
-import com.onaonline.lami.lami_backend.data.UserDetails;
+import com.onaonline.lami.lami_backend.data.details.UserDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

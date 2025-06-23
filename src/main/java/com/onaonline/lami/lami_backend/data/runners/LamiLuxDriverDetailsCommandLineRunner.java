@@ -1,14 +1,12 @@
 package com.onaonline.lami.lami_backend.data.runners;
 
-import com.onaonline.lami.lami_backend.data.LamiDriverDetails;
-import com.onaonline.lami.lami_backend.data.LamiLuxDriverDetails;
+import com.onaonline.lami.lami_backend.data.details.LamiLuxDriverDetails;
 import com.onaonline.lami.lami_backend.data.repos.LamiLuxDriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Component

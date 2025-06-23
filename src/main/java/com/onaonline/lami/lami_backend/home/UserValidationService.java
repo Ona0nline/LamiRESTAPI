@@ -1,8 +1,10 @@
 package com.onaonline.lami.lami_backend.home;
 
-import com.onaonline.lami.lami_backend.data.UserDetails;
+import com.onaonline.lami.lami_backend.data.details.UserDetails;
 
 import com.onaonline.lami.lami_backend.data.repos.UserRepository;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -60,11 +62,18 @@ public class UserValidationService {
 
     public UserDetails profileview(String email){
 //        should return users info if login returned true
-        System.out.println(userRepository.findByEmail(email).toString());
         UserDetails user = userRepository.findByEmail(email).get();
         var usernopassword = user.builder().username(user.getUsername()).email(user.getEmail())
                 .phone_number(user.getPhone_number()).build();
        return usernopassword;
+
+    }
+
+    public Long deleteById(String email) {
+
+        Optional<UserDetails> user = userRepository.findByEmail(email);
+        user.ifPresent(userDetails -> userRepository.deleteById(userDetails.getId()));
+        return user.get().getId();
 
     }
 }

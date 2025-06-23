@@ -1,7 +1,7 @@
 package com.onaonline.lami.lami_backend.rideoptions.lami;
 
-import com.onaonline.lami.lami_backend.data.LamiDriverDetails;
-import com.onaonline.lami.lami_backend.data.RideDetails;
+import com.onaonline.lami.lami_backend.data.details.LamiDriverDetails;
+import com.onaonline.lami.lami_backend.data.details.RideDetails;
 import com.onaonline.lami.lami_backend.data.repos.LamiDriverRepository;
 import com.onaonline.lami.lami_backend.data.repos.RideRepository;
 import org.springframework.beans.factory.annotation.Autowired;

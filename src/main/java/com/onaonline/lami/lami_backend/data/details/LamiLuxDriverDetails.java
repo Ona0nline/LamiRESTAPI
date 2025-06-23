@@ -1,59 +1,50 @@
-package com.onaonline.lami.lami_backend.data;
+package com.onaonline.lami.lami_backend.data.details;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
+@RequiredArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter @Setter
-public class LamiDriverDetails {
+public class LamiLuxDriverDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public long id;
+    private long id;
     private String drivername;
     private String driveridnumber;
     private String phonenumber;
     private String email;
-    private boolean availiable;
+    private boolean is_availiable;
     private String car;
     private String license_plate;
     private String location;
     private String ride_status;
-
-
-    public LamiDriverDetails( String drivername, String driveridnumber, String phonenumber, String email, boolean availiable, String car, String license_plate, String location, String ride_status) {
-        this.drivername = drivername;
-        this.driveridnumber = driveridnumber;
-        this.phonenumber = phonenumber;
-        this.email = email;
-        this.availiable = availiable;
-        this.car = car;
-        this.license_plate = license_plate;
-        this.location = location;
-        this.ride_status = ride_status;
-    }
-
-    public LamiDriverDetails() {
-
-    }
+    private List<String> perks;
+    private String driverlevel;
 
 
     @Override
     public String toString() {
-        return "DriverDetails{" +
-                "id='" + id + '\'' +
+        return "LamiLuxDriverDetails{" +
+                "id=" + id +
                 ", drivername='" + drivername + '\'' +
                 ", driveridnumber='" + driveridnumber + '\'' +
                 ", phonenumber='" + phonenumber + '\'' +
                 ", email='" + email + '\'' +
-                ", is_availiable=" + availiable +
+                ", is_availiable=" + is_availiable +
                 ", car='" + car + '\'' +
                 ", license_plate='" + license_plate + '\'' +
                 ", location='" + location + '\'' +
                 ", ride_status='" + ride_status + '\'' +
+                ", perks=" + perks +
+                ", driverlevel='" + driverlevel + '\'' +
                 '}';
     }
 }
