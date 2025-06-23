@@ -5,6 +5,7 @@ import com.onaonline.lami.lami_backend.data.UserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,6 +42,19 @@ public class UserValidationResource {
             return ResponseEntity.ok("Login Successful");
         }
         return ResponseEntity.status(401).body("Unauthorized login");
+
+    }
+
+    @PostMapping("/profile")
+//    ? placeholder for any object
+    public ResponseEntity<?> profile(@Valid @RequestBody LoginDTO loginDTO) {
+        boolean loginState = homeService.login(loginDTO.getEmail(), loginDTO.getPassword());
+        if (loginState) {
+            UserDetails user = homeService.profileview(loginDTO.getEmail());
+           return ResponseEntity.ok(user);
+
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed or user not found.");
 
     }
 

@@ -16,8 +16,8 @@
 //        return http
 //                .csrf(csrf -> csrf.disable())
 //                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/home", "/lami", "/h2-console/**").permitAll()
-//                        .anyRequest().permitAll()
+//                        .requestMatchers("/home", "/lami", "/signup","/login", "/profile", "/lami/", "/h2-console/**").permitAll()
+////                        .anyRequest().authenticated()
 //                )
 //                .build();
 //    }

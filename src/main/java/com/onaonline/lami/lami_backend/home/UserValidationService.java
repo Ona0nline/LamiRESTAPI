@@ -6,7 +6,6 @@ import com.onaonline.lami.lami_backend.data.repos.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import java.util.Map;
 import java.util.Optional;
 
@@ -50,14 +49,22 @@ public class UserValidationService {
     public boolean login(String email, String password) {
 
         Optional<UserDetails> optionalemail = userRepository.findByEmail(email);
-        Optional<UserDetails> optionalpassword = userRepository.findByPassword(password);
-
-//        if (optionalpassword.isEmpty()) return false;
 
         if(optionalemail.isPresent()){
-            return optionalpassword.toString().equals(password);
+            UserDetails user = optionalemail.get();
+            return password.equals(user.getPassword());
         }
         return true;
+
+    }
+
+    public UserDetails profileview(String email){
+//        should return users info if login returned true
+        System.out.println(userRepository.findByEmail(email).toString());
+        UserDetails user = userRepository.findByEmail(email).get();
+        var usernopassword = user.builder().username(user.getUsername()).email(user.getEmail())
+                .phone_number(user.getPhone_number()).build();
+       return usernopassword;
 
     }
 }
