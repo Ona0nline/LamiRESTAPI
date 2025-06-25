@@ -44,6 +44,29 @@ public class UserValidationResource {
 
     }
 
+    @PostMapping("/profile")
+//    ? placeholder for any object
+    public ResponseEntity<?> profile(@Valid @RequestBody LoginDTO loginDTO) {
+        boolean loginState = homeService.login(loginDTO.getEmail(), loginDTO.getPassword());
+        if (loginState) {
+            UserDetails user = homeService.profileview(loginDTO.getEmail());
+            return ResponseEntity.ok(user);
+
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed or user not found.");
+
+    }
+
+//    Used PUT instead of patch because if Patch, will need to create DTO for every scenario
+//
+//    @PutMapping("/update")
+//    public ResponseEntity<?> updateDetails(@RequestBody UserDTO userDTO){
+//        boolean loginState = homeService.login(userDTO.getEmail(),userDTO.getPassword());
+//        if(loginState){
+//            homeService.updateById(userDTO.getEmail());
+//        }
+//
+//    }
     @DeleteMapping("/delete")
     public ResponseEntity<?> delete(@RequestBody LoginDTO logintodeleteDTO){
 
@@ -57,18 +80,7 @@ public class UserValidationResource {
 
     }
 
-    @PostMapping("/profile")
-//    ? placeholder for any object
-    public ResponseEntity<?> profile(@Valid @RequestBody LoginDTO loginDTO) {
-        boolean loginState = homeService.login(loginDTO.getEmail(), loginDTO.getPassword());
-        if (loginState) {
-            UserDetails user = homeService.profileview(loginDTO.getEmail());
-           return ResponseEntity.ok(user);
 
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed or user not found.");
-
-    }
 
 
 }

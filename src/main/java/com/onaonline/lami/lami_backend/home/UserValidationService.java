@@ -76,4 +76,11 @@ public class UserValidationService {
         return user.get().getId();
 
     }
+
+//    public Long updateById(String email){
+//        Optional<UserDetails> optionalUserDetails = userRepository.findByEmail(email);
+//        if(optionalUserDetails.isPresent()){
+//            userRepository
+//        }
+//    }
 }
