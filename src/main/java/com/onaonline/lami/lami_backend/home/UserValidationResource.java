@@ -44,6 +44,32 @@ public class UserValidationResource {
 
     }
 
+
+    @PostMapping("/profile")
+//    ? placeholder for any object
+    public ResponseEntity<?> profile(@Valid @RequestBody LoginDTO loginDTO) {
+        boolean loginState = homeService.login(loginDTO.getEmail(), loginDTO.getPassword());
+        if (loginState) {
+            UserDetails user = homeService.profileview(loginDTO.getEmail());
+            return ResponseEntity.ok(user);
+
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed or user not found.");
+
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@Valid @RequestBody UpdateDTO updateDTO){
+        boolean loginState = homeService.login(updateDTO.getEmail(), updateDTO.getPassword());
+        if (loginState) {
+            String tochange = homeService.update(updateDTO.getEmail(),updateDTO.getTochange(), updateDTO.getValue());
+            return ResponseEntity.ok("Successfully changed the " + tochange );
+
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed or user not found.");
+
+    }
+
     @DeleteMapping("/delete")
     public ResponseEntity<?> delete(@RequestBody LoginDTO logintodeleteDTO){
 
@@ -57,18 +83,6 @@ public class UserValidationResource {
 
     }
 
-    @PostMapping("/profile")
-//    ? placeholder for any object
-    public ResponseEntity<?> profile(@Valid @RequestBody LoginDTO loginDTO) {
-        boolean loginState = homeService.login(loginDTO.getEmail(), loginDTO.getPassword());
-        if (loginState) {
-            UserDetails user = homeService.profileview(loginDTO.getEmail());
-           return ResponseEntity.ok(user);
-
-        }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed or user not found.");
-
-    }
 
 
 }
