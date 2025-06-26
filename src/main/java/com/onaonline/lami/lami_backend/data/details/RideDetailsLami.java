@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RideDetails {
+public class RideDetailsLami {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

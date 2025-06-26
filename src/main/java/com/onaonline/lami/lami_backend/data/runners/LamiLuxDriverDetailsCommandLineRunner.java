@@ -12,7 +12,6 @@ import java.util.List;
 @Component
 public class LamiLuxDriverDetailsCommandLineRunner implements CommandLineRunner {
 
-    private static List<LamiLuxDriverDetails> lamiLuxDriverDetails = new ArrayList<>();
     private static List<LamiLuxDriverDetails> lamiluxdriverList = new ArrayList<>();
     @Autowired
     private LamiLuxDriverRepository lamiLuxDriverRepository;
@@ -34,6 +33,7 @@ public class LamiLuxDriverDetailsCommandLineRunner implements CommandLineRunner 
                 List.of("Spotify Premium", "Ambient lights", "Snacks"),
                 List.of("Silk slippers", "Chauffeur umbrella", "Pre-cooled cabin")
         );
+        List<String> locations = List.of("Johannesburg", "Pretoria", "Durban", "George", "Strandfontein","Lenasia", "OR Tambo International Airport", "Union Buildings");
 
 
 
@@ -43,16 +43,17 @@ public class LamiLuxDriverDetailsCommandLineRunner implements CommandLineRunner 
             String rideStatus = rideStatuses.get(i % rideStatuses.size());
             String driverLevel = driverLevels.get(i % driverLevels.size());
             List<String> perks = perksList.get(i % perksList.size());
+            String location = locations.get(i % locations.size());
 
             LamiLuxDriverDetails driver = LamiLuxDriverDetails.builder()
                     .drivername(name)
                     .driveridnumber("9903" + i + "5123489")
                     .phonenumber("073 867 34" + String.format("%02d", i))
                     .email(name.toLowerCase().replaceAll(" ", ".") + "@lamidrivers.com")
-                    .is_availiable(true)
+                    .availiable(true)
                     .car(car)
                     .license_plate("GP " + (10 + i) + " XX GP")
-                    .location("Johannesburg")
+                    .location(location)
                     .ride_status(rideStatus)
                     .perks(perks)
                     .driverlevel(driverLevel)

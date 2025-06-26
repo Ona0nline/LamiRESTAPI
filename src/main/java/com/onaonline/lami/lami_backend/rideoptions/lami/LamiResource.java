@@ -1,7 +1,8 @@
 package com.onaonline.lami.lami_backend.rideoptions.lami;
 
-import com.onaonline.lami.lami_backend.data.details.RideDetails;
+import com.onaonline.lami.lami_backend.data.details.RideDetailsLami;
 import com.onaonline.lami.lami_backend.rideoptions.Ride;
+import com.onaonline.lami.lami_backend.rideoptions.RideRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,7 @@ public class LamiResource extends Ride {
 
 
     @PostMapping("/lami/request-ride")
-    public ResponseEntity<RideDetails> requestride(@RequestBody Lami lami) {
+    public ResponseEntity<RideDetailsLami> requestride(@RequestBody Lami lami) {
         return ResponseEntity.ok(lamiService.bookride(lami));
     }
 

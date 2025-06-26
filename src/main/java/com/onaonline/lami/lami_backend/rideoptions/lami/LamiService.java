@@ -1,9 +1,9 @@
 package com.onaonline.lami.lami_backend.rideoptions.lami;
 
 import com.onaonline.lami.lami_backend.data.details.LamiDriverDetails;
-import com.onaonline.lami.lami_backend.data.details.RideDetails;
+import com.onaonline.lami.lami_backend.data.details.RideDetailsLami;
 import com.onaonline.lami.lami_backend.data.repos.LamiDriverRepository;
-import com.onaonline.lami.lami_backend.data.repos.RideRepository;
+import com.onaonline.lami.lami_backend.data.repos.RideRepositoryLami;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class LamiService {
     @Autowired
     private LamiDriverRepository lamiDriverRepository;
     @Autowired
-    private RideRepository rideRepository;
+    private RideRepositoryLami rideRepositoryLami;
 
     public List<Map<String, Object>> displayavailablerides(String startlocation, String endLocation) {
 //End location param has secret purpose in frontend
@@ -29,7 +29,6 @@ public class LamiService {
                 availabledrivers.add(Map.of(
                         "id", driver.getId(),
                         "drivername", driver.getDrivername(),
-                        "car",driver.getCar(),
                         "licensePlate",driver.getLicense_plate(),
                         "location",driver.getLocation(),
                         "fare","R50"
@@ -41,7 +40,7 @@ public class LamiService {
     }
 
 
-    public RideDetails bookride(Lami lami) {
+    public RideDetailsLami bookride(Lami lami) {
 
         if (lami.getDriverid() == null) {
             throw new RuntimeException("Driver ID is missing from the request.");
@@ -49,14 +48,14 @@ public class LamiService {
         LamiDriverDetails driver = lamiDriverRepository.findById(lami.getDriverid())
                 .orElseThrow(() -> new RuntimeException("Driver not found"));
 
-        RideDetails confirmedRide = RideDetails.builder()
+        RideDetailsLami confirmedRide = RideDetailsLami.builder()
                 .startLocation(lami.getStartLocation())
                 .endLocation(lami.getEndLocation())
                 .fare("R" + lami.getFare())
                 .driver(driver)
                 .build();
 
-        rideRepository.save(confirmedRide);
+        rideRepositoryLami.save(confirmedRide);
         return confirmedRide;
 
     }

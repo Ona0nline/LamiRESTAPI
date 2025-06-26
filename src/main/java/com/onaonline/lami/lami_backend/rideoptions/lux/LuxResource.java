@@ -1,26 +1,38 @@
 package com.onaonline.lami.lami_backend.rideoptions.lux;
 
+import com.onaonline.lami.lami_backend.home.UserValidationService;
 import com.onaonline.lami.lami_backend.rideoptions.Ride;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.onaonline.lami.lami_backend.rideoptions.RideRequestDTO;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 public class LuxResource extends Ride {
 
-    @GetMapping("/luxury")
-    public Map<String, String> luxury() {
-        return Map.of(
-                "header", "Luxury",
-                "pointA", "userlocation",
-                "pointB","destinationlocation",
-                "drivername", "Themba Driver",
-                "car", "Rolls Royce",
-                "license-plate", "KJ 11 ND GP",
-                "certs", "What makes the driver special",
-                "more", "More lux stuff",
-                "price", "R40"
-        );
+    @Autowired
+    private UserValidationService userValidationService;
+
+    @Autowired
+    private LuxuryService luxuryService;
+
+    @PostMapping("/luxury/available-rides")
+    public ResponseEntity<?> availablerides(@RequestBody RideRequestDTO rideRequestDTO){
+        List<Map<String, Object>> available_drivers = luxuryService.displayavailablerides(rideRequestDTO.getStartLocation(), rideRequestDTO.getEndLocation());
+        if(available_drivers.isEmpty()){
+            return ResponseEntity.ok("No available drivers");
+        }
+        return ResponseEntity.ok(available_drivers);
+    }
+
+
+    @PostMapping("luxury/request-ride")
+    public ResponseEntity<?> requestRide(@RequestBody Luxury luxury){
+        return ResponseEntity.ok(luxuryService.bookride(luxury));
     }
 }

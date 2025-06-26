@@ -18,19 +18,17 @@ public class LamiDriverDetails {
     private String phonenumber;
     private String email;
     private boolean availiable;
-    private String car;
     private String license_plate;
     private String location;
     private String ride_status;
 
 
-    public LamiDriverDetails( String drivername, String driveridnumber, String phonenumber, String email, boolean availiable, String car, String license_plate, String location, String ride_status) {
+    public LamiDriverDetails( String drivername, String driveridnumber, String phonenumber, String email, boolean availiable, String license_plate, String location, String ride_status) {
         this.drivername = drivername;
         this.driveridnumber = driveridnumber;
         this.phonenumber = phonenumber;
         this.email = email;
         this.availiable = availiable;
-        this.car = car;
         this.license_plate = license_plate;
         this.location = location;
         this.ride_status = ride_status;
@@ -50,7 +48,6 @@ public class LamiDriverDetails {
                 ", phonenumber='" + phonenumber + '\'' +
                 ", email='" + email + '\'' +
                 ", is_availiable=" + availiable +
-                ", car='" + car + '\'' +
                 ", license_plate='" + license_plate + '\'' +
                 ", location='" + location + '\'' +
                 ", ride_status='" + ride_status + '\'' +

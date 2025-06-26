@@ -1,11 +1,9 @@
 package com.onaonline.lami.lami_backend.data.details;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,12 +19,13 @@ public class LamiLuxDriverDetails {
     private String driveridnumber;
     private String phonenumber;
     private String email;
-    private boolean is_availiable;
+    private boolean availiable;
     private String car;
     private String license_plate;
     private String location;
     private String ride_status;
-    private List<String> perks;
+    @ElementCollection
+    private List<String> perks = new ArrayList<>();
     private String driverlevel;
 
 
@@ -38,7 +37,7 @@ public class LamiLuxDriverDetails {
                 ", driveridnumber='" + driveridnumber + '\'' +
                 ", phonenumber='" + phonenumber + '\'' +
                 ", email='" + email + '\'' +
-                ", is_availiable=" + is_availiable +
+                ", availiable=" + availiable +
                 ", car='" + car + '\'' +
                 ", license_plate='" + license_plate + '\'' +
                 ", location='" + location + '\'' +
