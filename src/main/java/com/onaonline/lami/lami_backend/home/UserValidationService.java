@@ -3,7 +3,6 @@ package com.onaonline.lami.lami_backend.home;
 import com.onaonline.lami.lami_backend.data.details.UserDetails;
 
 import com.onaonline.lami.lami_backend.data.repos.UserRepository;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -69,6 +68,33 @@ public class UserValidationService {
 
     }
 
+//    Notes is it works but something is off. It is supposed to block emails that don't exist...instead status code is 200
+
+    public String update(String email, String tochange, @NotBlank String value) {
+        Optional<UserDetails> optionalUserDetails = userRepository.findByEmail(email);
+
+        if(optionalUserDetails.isPresent()){
+            UserDetails userDetails = optionalUserDetails.get();
+            var user = userDetails.builder().username(userDetails.getUsername())
+                    .email(userDetails.getEmail()).phone_number(userDetails.getPhone_number())
+                    .password(userDetails.getPassword());
+
+            switch (tochange){
+                case "username" -> user.username(value);
+                case "email" -> user.email(value);
+                case "phone_number" -> user.phone_number(value);
+//                Will realistically need way more authentication than this
+                case "password" -> user.password(value);
+            }
+
+            userRepository.deleteById(userDetails.getId());
+            userRepository.save(user.build());
+        }
+
+        return tochange;
+
+    }
+
     public Long deleteById(String email) {
 
         Optional<UserDetails> user = userRepository.findByEmail(email);
@@ -77,10 +103,5 @@ public class UserValidationService {
 
     }
 
-//    public Long updateById(String email){
-//        Optional<UserDetails> optionalUserDetails = userRepository.findByEmail(email);
-//        if(optionalUserDetails.isPresent()){
-//            userRepository
-//        }
-//    }
+
 }
