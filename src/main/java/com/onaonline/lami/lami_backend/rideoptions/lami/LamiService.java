@@ -49,6 +49,8 @@ public class LamiService {
         return availabledrivers;
     }
 
+//    This logic doesnt actually make sense, should request ride from the available drivers method above
+
 
     public RideDetailsLami bookride(Lami lami) {
 
