@@ -1,6 +1,5 @@
 package com.onaonline.lami.lami_backend.home;
 
-//import com.onaonline.lami.lami_backend.data.details.UserDetails;
 import com.onaonline.lami.lami_backend.data.details.UserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

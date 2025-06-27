@@ -34,8 +34,8 @@ public class UserValidationService {
                     username(signuprequest.getUsername())
                     .email(signuprequest.getEmail())
                     .phone_number(signuprequest.getPhone_number())
-                    .password(signuprequest.getPassword()).
-                    location(signuprequest.getLocation()).build();
+                    .password(signuprequest.getPassword()).latitude(signuprequest.getLatitude())
+                            .longitude(signuprequest.getLongitude()).placeName(signuprequest.getPlaceName()).build();
 
             userRepository.save(user);
         }
@@ -62,9 +62,8 @@ public class UserValidationService {
     public UserDetails profileview(String email){
 //        should return users info if login returned true
         UserDetails user = userRepository.findByEmail(email).get();
-        var usernopassword = user.builder().username(user.getUsername()).email(user.getEmail())
+        return user.builder().username(user.getUsername()).email(user.getEmail())
                 .phone_number(user.getPhone_number()).build();
-       return usernopassword;
 
     }
 

@@ -23,15 +23,21 @@ public class UserDetails {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String location;
+    private double latitude;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private double longitude;
+    private String placeName;
 
-    public UserDetails(Long id,String username, String email, String phone_number, String password, String location) {
+
+    public UserDetails(Long id,String username, String email, String phone_number, String password, double latitude, double longitude, String placeName) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.phone_number = phone_number;
         this.password = password;
-        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.placeName = placeName;
     }
 
     public UserDetails() {
