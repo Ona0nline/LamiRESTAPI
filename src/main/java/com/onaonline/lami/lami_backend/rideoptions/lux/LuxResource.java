@@ -22,8 +22,8 @@ public class LuxResource extends Ride {
     private LuxuryService luxuryService;
 
     @PostMapping("/luxury/available-rides")
-    public ResponseEntity<?> availablerides(@RequestBody RideRequestDTO rideRequestDTO){
-        List<Map<String, Object>> available_drivers = luxuryService.displayavailablerides(rideRequestDTO.getStartLocation(), rideRequestDTO.getEndLocation());
+    public ResponseEntity<?> availabledrivers(@RequestBody RideRequestDTO rideRequestDTO){
+        List<Map<String, Object>> available_drivers = luxuryService.displayavailablerides(rideRequestDTO.getId());
         if(available_drivers.isEmpty()){
             return ResponseEntity.ok("No available drivers");
         }

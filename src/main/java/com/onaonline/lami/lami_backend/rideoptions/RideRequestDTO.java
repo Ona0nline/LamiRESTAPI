@@ -4,13 +4,13 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 //What user passes in
+@Getter
 @RequiredArgsConstructor
 public class RideRequestDTO {
-    @Getter
-    private String startLocation;
-    @Getter
-    private String endLocation;
-
-
+    private Long id;
+    private double startLocationLat;
+    private double startLocationLong;
+    private double endLocationLat;
+    private double endLocationLong;
 
 }

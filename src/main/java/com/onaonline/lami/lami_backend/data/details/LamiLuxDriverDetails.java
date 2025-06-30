@@ -22,12 +22,10 @@ public class LamiLuxDriverDetails {
     private boolean availiable;
     private String car;
     private String license_plate;
-    private String location;
     private String ride_status;
     @ElementCollection
     private List<String> perks = new ArrayList<>();
     private String driverlevel;
-
 
     @Override
     public String toString() {
@@ -40,7 +38,6 @@ public class LamiLuxDriverDetails {
                 ", availiable=" + availiable +
                 ", car='" + car + '\'' +
                 ", license_plate='" + license_plate + '\'' +
-                ", location='" + location + '\'' +
                 ", ride_status='" + ride_status + '\'' +
                 ", perks=" + perks +
                 ", driverlevel='" + driverlevel + '\'' +

@@ -53,7 +53,6 @@ public class LamiLuxDriverDetailsCommandLineRunner implements CommandLineRunner 
                     .availiable(true)
                     .car(car)
                     .license_plate("GP " + (10 + i) + " XX GP")
-                    .location(location)
                     .ride_status(rideStatus)
                     .perks(perks)
                     .driverlevel(driverLevel)

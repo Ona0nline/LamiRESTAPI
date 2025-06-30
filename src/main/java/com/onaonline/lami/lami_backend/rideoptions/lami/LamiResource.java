@@ -20,7 +20,7 @@ public class LamiResource extends Ride {
 
     @PostMapping("/lami/available-rides")
     public ResponseEntity<Object> availablerides(@RequestBody RideRequestDTO rideRequest) {
-        List<Map<String, Object>> results = lamiService.displayavailablerides(rideRequest.getStartLocation(), rideRequest.getEndLocation());
+        List<Map<String, Object>> results = lamiService.displayavailablerides(rideRequest.getStartLocationLat(), rideRequest.getStartLocationLong(), rideRequest.getEndLocationLat(), rideRequest.getEndLocationLong());
         if (results.isEmpty()) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(results);
     }

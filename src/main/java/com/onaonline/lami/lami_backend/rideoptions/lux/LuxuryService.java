@@ -1,19 +1,23 @@
 package com.onaonline.lami.lami_backend.rideoptions.lux;
 
+import com.onaonline.lami.lami_backend.data.details.LamiDriverDetails;
 import com.onaonline.lami.lami_backend.data.details.LamiLuxDriverDetails;
 import com.onaonline.lami.lami_backend.data.details.RideDetailsLux;
 import com.onaonline.lami.lami_backend.data.repos.LamiLuxDriverRepository;
 import com.onaonline.lami.lami_backend.data.repos.RideRepositoryLami;
 import com.onaonline.lami.lami_backend.data.repos.RideRepositoryLux;
+import com.onaonline.lami.lami_backend.util.BoundingBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class LuxuryService {
+    private BoundingBox boundingBox;
 
     @Autowired
     private LamiLuxDriverRepository lamiLuxDriverRepository;
@@ -21,18 +25,25 @@ public class LuxuryService {
     @Autowired
     private RideRepositoryLux rideRepositoryLux;
 
-    public List<Map<String, Object>> displayavailablerides(String startlocation, String endLocation) {
-//End location param has secret purpose in frontend
-        List<LamiLuxDriverDetails> nearbyDrivers = lamiLuxDriverRepository.findByLocationAndAvailiable(startlocation, true);
+    public List<Map<String, Object>> displayavailablerides(Long id) {
+
+//        This desn't make sense lowkey because where are you gonna see a Rolls Royce randomly hanging around?
+//        LamiLux on pause for now
+//        BoundingBox boundingBox1 = boundingBox.calculateBoundingBox(startLocationLat,startLocationLong,12.5);
+        Optional<LamiLuxDriverDetails> nearbyDrivers = lamiLuxDriverRepository.findById(id);
+        List<LamiLuxDriverDetails> drvers = nearbyDrivers.stream().toList();
+
+//Need to figure out how "close" drivers are based off of
+//        double circle_distance = haversine(startLocationLat,startLocationLong)
+
         ArrayList<Map<String, Object>> availabledrivers = new ArrayList<>();
 
-        if(!nearbyDrivers.isEmpty()){
-            for (LamiLuxDriverDetails driver : nearbyDrivers) {
+        if(nearbyDrivers.isPresent()){
+            for (LamiLuxDriverDetails driver : drvers) {
                 availabledrivers.add(Map.of(
                         "id", driver.getId(),
                         "drivername", driver.getDrivername(),
                         "licensePlate",driver.getLicense_plate(),
-                        "location",driver.getLocation(),
                         "fare","R50"
                 ));
             }
