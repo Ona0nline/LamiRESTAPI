@@ -19,7 +19,7 @@ public class LamiService {
     private LamiDriverRepository lamiDriverRepository;
     @Autowired
     private RideRepositoryLami rideRepositoryLami;
-    private BoundingBox boundingBox;
+    private BoundingBox boundingBox = new BoundingBox();
 
     public List<Map<String, Object>> displayavailablerides(double startLocationLat,double startLocationLong, double endLocationLat, double endLocationLong) {
 

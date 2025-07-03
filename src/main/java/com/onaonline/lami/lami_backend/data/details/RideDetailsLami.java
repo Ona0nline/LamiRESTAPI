@@ -12,10 +12,10 @@ import lombok.RequiredArgsConstructor;
 public class RideDetailsLami {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String startLocation;
-    private String endLocation;
-    private String fare;
+    public Long id;
+    public String startLocation;
+    public String endLocation;
+    public String fare;
     //    Relationship between tables
     @ManyToOne
     @JoinColumn(name = "driver_id", referencedColumnName = "id")

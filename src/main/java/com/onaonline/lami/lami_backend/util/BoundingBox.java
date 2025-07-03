@@ -13,6 +13,10 @@ public class BoundingBox {
         this.lonMax = lonMax;
     }
 
+    public BoundingBox(){
+
+    }
+
 //    Calculates a radius km wide rectangular box around the users start location
 
     public BoundingBox calculateBoundingBox(double lat, double lon, double radiusKm) {

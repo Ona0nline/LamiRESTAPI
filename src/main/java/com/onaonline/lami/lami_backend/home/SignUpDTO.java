@@ -26,7 +26,6 @@ public class SignUpDTO {
         private String password;
         @NotBlank
         private String confirmPassword;
-        @NotBlank(message = "User location is needed.")
         @NotNull
         private double latitude;
         @NotNull
