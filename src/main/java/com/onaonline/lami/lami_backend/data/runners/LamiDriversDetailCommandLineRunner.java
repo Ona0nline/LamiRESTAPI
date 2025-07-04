@@ -28,7 +28,7 @@ public class LamiDriversDetailCommandLineRunner implements CommandLineRunner {
         lamiDriverDetails.add(new LamiDriverDetails("Zanele Ngubane", "9301023456789", "074 333 4567", "zanele.ngubane@gmail.com", true, "GP 76 ER GP", -25.7461, 28.1881, "Pretoria CBD", "cancelled"));
         lamiDriverDetails.add(new LamiDriverDetails("Boitumelo Modise", "9505148765432", "076 444 5678", "boitumelo.m@live.com", true, "NW 87 KA GP", -25.7844, 28.2750, "Menlyn Mall, Pretoria", "not started"));
 
-        lamiDriverDetails.add(new LamiDriverDetails("Kagiso Molefe", "9012145678901", "072 777 1234", "kagiso.molefe@gmail.com", true, "FS 88 KL GP", -26.1791, 28.1185, "Eastgate Mall, Johannesburg East", "not started"));
+        lamiDriverDetails.add(new LamiDriverDetails("Kagiso Molefe", "9012145678901", "072 777 1234", "kagiso.molefe@gmail.com", true, "FS 88 KL GP", -26.180388,  28.1172088, "Eastgate Mall, Johannesburg East", "not started"));
         lamiDriverDetails.add(new LamiDriverDetails("Lindiwe Dube", "9003123456789", "073 888 2345", "lindiwe.dube@hotmail.com", false, "GP 34 ML GP", -26.1451, 28.0416, "Rosebank Mall, Johannesburg", "completed"));
         lamiDriverDetails.add(new LamiDriverDetails("Sizwe Nkosi", "8801067890123", "074 999 3456", "sizwe.nkosi@ymail.com", true, "CA 11 QT WC", -33.9066, 18.4208, "V&A Waterfront, Cape Town", "en route"));
         lamiDriverDetails.add(new LamiDriverDetails("Thandeka Radebe", "9308198765432", "071 000 4567", "thandeka.r@gmail.com", true, "KZN 76 FE GP", -29.7261, 31.0648, "Gateway Theatre, Umhlanga", "cancelled"));

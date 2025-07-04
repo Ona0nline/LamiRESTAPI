@@ -1,6 +1,9 @@
 package com.onaonline.lami.lami_backend.rideoptions.lami;
 
 import com.onaonline.lami.lami_backend.data.details.RideDetailsLami;
+import com.onaonline.lami.lami_backend.externalApis.GeocodeRequestDTO;
+import com.onaonline.lami.lami_backend.externalApis.GeocodeResponseDTO;
+import com.onaonline.lami.lami_backend.externalApis.GeocodeService;
 import com.onaonline.lami.lami_backend.rideoptions.Ride;
 import com.onaonline.lami.lami_backend.rideoptions.RideRequestDTO;
 import lombok.RequiredArgsConstructor;
@@ -18,9 +21,15 @@ public class LamiResource extends Ride {
     @Autowired
     private LamiService lamiService;
 
+    @Autowired
+    private GeocodeService geocodeService;
+
     @PostMapping("/lami/available-rides")
-    public ResponseEntity<Object> availablerides(@RequestBody RideRequestDTO rideRequest) {
-        List<Map<String, Object>> results = lamiService.displayavailablerides(rideRequest.getStartLocationLat(), rideRequest.getStartLocationLong(), rideRequest.getEndLocationLat(), rideRequest.getEndLocationLong());
+    public ResponseEntity<Object> availablerides(@RequestBody GeocodeRequestDTO geocodeRequestDTO) throws Exception {
+
+        GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(geocodeRequestDTO.getAddress());
+        System.out.println(geocodeResponseDTO);
+        List<Map<String, Object>> results = lamiService.displayavailablerides(geocodeResponseDTO.getLatitude(),geocodeResponseDTO.getLongitude());
         if (results.isEmpty()) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(results);
     }
@@ -29,6 +38,19 @@ public class LamiResource extends Ride {
     @PostMapping("/lami/request-ride")
     public ResponseEntity<RideDetailsLami> requestride(@RequestBody Lami lami) {
         return ResponseEntity.ok(lamiService.bookride(lami));
+    }
+
+//    Start location input from user
+    @PostMapping("/lami/startLocation")
+    public ResponseEntity<?> startLocation(@RequestBody GeocodeRequestDTO geocodeRequestDTO) throws Exception {
+        return ResponseEntity.ok(geocodeService.geocodeAddress(geocodeRequestDTO.getAddress()));
+    }
+
+    @PostMapping("/lami/endLocation")
+    public ResponseEntity<?> endLocation(@RequestBody GeocodeRequestDTO geocodeRequestDTO) throws Exception {
+        GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(geocodeRequestDTO.getAddress());
+
+        return ResponseEntity.ok(geocodeService.geocodeAddress(geocodeRequestDTO.getAddress()));
     }
 
 
