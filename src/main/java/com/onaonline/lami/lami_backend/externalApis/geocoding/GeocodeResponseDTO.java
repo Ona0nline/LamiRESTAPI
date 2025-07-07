@@ -1,4 +1,4 @@
-package com.onaonline.lami.lami_backend.externalApis;
+package com.onaonline.lami.lami_backend.externalApis.geocoding;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

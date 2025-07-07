@@ -14,10 +14,13 @@ public abstract class Ride {
     private Long id;
     @Getter
     @Setter
-    private String startLocation;
+    private String placename;
     @Getter
     @Setter
-    private String endLocation;
+    private double latitude;
+    @Getter
+    @Setter
+    private double longitude;
     @Getter
     @Setter
     public Long driverid;

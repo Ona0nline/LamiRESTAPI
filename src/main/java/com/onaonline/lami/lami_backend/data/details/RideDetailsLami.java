@@ -13,8 +13,9 @@ public class RideDetailsLami {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
-    public String startLocation;
-    public String endLocation;
+    public String placename;
+    public double latitude;
+    public double longitude;
     public String fare;
     //    Relationship between tables
     @ManyToOne

@@ -1,8 +1,6 @@
-package com.onaonline.lami.lami_backend.externalApis;
+package com.onaonline.lami.lami_backend.externalApis.geocoding;
 
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

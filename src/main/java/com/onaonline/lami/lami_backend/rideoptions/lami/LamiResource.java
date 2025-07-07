@@ -1,11 +1,10 @@
 package com.onaonline.lami.lami_backend.rideoptions.lami;
 
 import com.onaonline.lami.lami_backend.data.details.RideDetailsLami;
-import com.onaonline.lami.lami_backend.externalApis.GeocodeRequestDTO;
-import com.onaonline.lami.lami_backend.externalApis.GeocodeResponseDTO;
-import com.onaonline.lami.lami_backend.externalApis.GeocodeService;
+import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeRequestDTO;
+import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeResponseDTO;
+import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeService;
 import com.onaonline.lami.lami_backend.rideoptions.Ride;
-import com.onaonline.lami.lami_backend.rideoptions.RideRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

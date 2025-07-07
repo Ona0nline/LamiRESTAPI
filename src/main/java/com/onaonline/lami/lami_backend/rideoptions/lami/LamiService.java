@@ -58,9 +58,9 @@ public class LamiService {
         LamiDriverDetails driver = lamiDriverRepository.findById(lami.getDriverid())
                 .orElseThrow(() -> new RuntimeException("Driver not found"));
 
-        RideDetailsLami confirmedRide = RideDetailsLami.builder()
-                .startLocation(lami.getStartLocation())
-                .endLocation(lami.getEndLocation())
+        RideDetailsLami confirmedRide = RideDetailsLami.builder().
+                placename(driver.getPlaceName()).latitude(driver.getLatitude())
+                .longitude(driver.getLongitude())
                 .fare("R" + lami.getFare())
                 .driver(driver)
                 .build();

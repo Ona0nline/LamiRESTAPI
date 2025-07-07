@@ -61,9 +61,11 @@ public class LuxuryService {
         LamiLuxDriverDetails luxdriver = lamiLuxDriverRepository.findById(luxury.getDriverid())
                 .orElseThrow(() -> new RuntimeException("Driver not found"));
 
-        RideDetailsLux confirmedRide = RideDetailsLux.builder().startLocation(luxury.getStartLocation())
-                        .endLocation(luxury.getEndLocation()).
-                        fare("R" + luxury.getFare()).
+        RideDetailsLux confirmedRide = RideDetailsLux.builder()
+                        .placename(luxury.getPlacename())
+                                .latitude(luxury.getLatitude())
+                                        .longitude(luxury.getLongitude())
+                .fare("R" + luxury.getFare()).
                         driver(luxdriver).build();
 
         rideRepositoryLux.save(confirmedRide);
