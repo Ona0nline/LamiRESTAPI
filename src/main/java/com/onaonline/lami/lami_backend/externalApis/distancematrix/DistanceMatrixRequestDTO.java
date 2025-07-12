@@ -6,6 +6,8 @@ import lombok.Data;
 public class DistanceMatrixRequestDTO {
     private String startLocation;
     private String endLocation;
+    private String lat;
+    private String lon;
 
 
 }

@@ -1,10 +1,13 @@
 package com.onaonline.lami.lami_backend.rideoptions;
 
+import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatrixResponseDTO;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 
 public abstract class Ride {
@@ -27,5 +30,6 @@ public abstract class Ride {
     @Getter
     @Setter
     private Long fare;
+
 
 }

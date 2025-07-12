@@ -53,7 +53,7 @@ public class DistanceMatrixService {
                 fare = "R" + (2500 / 100);
                 return new DistanceMatrixResponseDTO(durationSeconds, distanceMeters, fare);
             }
-            fare = "R" + (475 * (distanceMeters / 1000)) / 100;
+            fare = "R" + String.format("%.2f", (475 * (distanceMeters / 1000.0)) / 100);
             return new DistanceMatrixResponseDTO(durationSeconds, distanceMeters, fare);
 
         }

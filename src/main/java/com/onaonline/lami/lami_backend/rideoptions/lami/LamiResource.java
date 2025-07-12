@@ -1,7 +1,9 @@
 package com.onaonline.lami.lami_backend.rideoptions.lami;
 
 import com.onaonline.lami.lami_backend.data.details.RideDetailsLami;
-import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeRequestDTO;
+import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatrixRequestDTO;
+import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatrixResponseDTO;
+import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatrixService;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeResponseDTO;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeService;
 import com.onaonline.lami.lami_backend.rideoptions.Ride;
@@ -23,14 +25,23 @@ public class LamiResource extends Ride {
     @Autowired
     private GeocodeService geocodeService;
 
-    @PostMapping("/lami/available-rides")
-    public ResponseEntity<Object> availablerides(@RequestBody GeocodeRequestDTO geocodeRequestDTO) throws Exception {
+    @Autowired
+    private DistanceMatrixService distanceMatrixService;
+//    Plan:
+//    DistanceMatrixDTO -> returning duration,distance,fare.
+//    Same endpoint, DistanceMatrixDTO startLocation gets geocoded -> Use those coords to find available drivers
 
-        GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(geocodeRequestDTO.getAddress());
+
+    @PostMapping("/lami/available-rides")
+    public ResponseEntity<Object> availablerides(@RequestBody DistanceMatrixRequestDTO distanceMatrixRequestDTO) throws Exception {
+//        Ride response for user (Distance, duration, fare)
+        DistanceMatrixResponseDTO distanceMatrixResponse = distanceMatrixService.distanceCalculator(distanceMatrixRequestDTO.getStartLocation(),distanceMatrixRequestDTO.getEndLocation());
+        GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(distanceMatrixRequestDTO.getStartLocation());
         System.out.println(geocodeResponseDTO);
         List<Map<String, Object>> results = lamiService.displayavailablerides(geocodeResponseDTO.getLatitude(),geocodeResponseDTO.getLongitude());
+        AvailableRidesResponseDTO availableRidesResponse = new AvailableRidesResponseDTO(distanceMatrixResponse,results);
         if (results.isEmpty()) return ResponseEntity.noContent().build();
-        return ResponseEntity.ok(results);
+        return ResponseEntity.ok(availableRidesResponse);
     }
 
 
@@ -39,18 +50,6 @@ public class LamiResource extends Ride {
         return ResponseEntity.ok(lamiService.bookride(lami));
     }
 
-//    Start location input from user
-    @PostMapping("/lami/startLocation")
-    public ResponseEntity<?> startLocation(@RequestBody GeocodeRequestDTO geocodeRequestDTO) throws Exception {
-        return ResponseEntity.ok(geocodeService.geocodeAddress(geocodeRequestDTO.getAddress()));
-    }
-
-    @PostMapping("/lami/endLocation")
-    public ResponseEntity<?> endLocation(@RequestBody GeocodeRequestDTO geocodeRequestDTO) throws Exception {
-        GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(geocodeRequestDTO.getAddress());
-
-        return ResponseEntity.ok(geocodeService.geocodeAddress(geocodeRequestDTO.getAddress()));
-    }
 
 
 }

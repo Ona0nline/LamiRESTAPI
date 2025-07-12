@@ -39,8 +39,7 @@ public class LamiService {
                         "licensePlate",driver.getLicense_plate(),
                         "latitude",driver.getLatitude(),
                         "longitude", driver.getLongitude(),
-                        "placeName", driver.getPlaceName(),
-                        "fare","R50"
+                        "placeName", driver.getPlaceName()
                 ));
             }
         }
