@@ -1,4 +1,4 @@
-package com.onaonline.lami.lami_backend.data.details;
+package com.onaonline.lami.lami_backend.database.details;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
-public class RideDetailsLami {
+public class RideDetailsLux {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
@@ -20,6 +20,6 @@ public class RideDetailsLami {
     //    Relationship between tables
     @ManyToOne
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
-    public LamiDriverDetails driver;
+    public LamiLuxDriverDetails driver;
 
 }

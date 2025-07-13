@@ -1,6 +1,6 @@
 package com.onaonline.lami.lami_backend.rideoptions.lami;
 
-import com.onaonline.lami.lami_backend.data.details.RideDetailsLami;
+import com.onaonline.lami.lami_backend.database.details.RideDetailsLami;
 import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatrixRequestDTO;
 import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatrixResponseDTO;
 import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatrixService;

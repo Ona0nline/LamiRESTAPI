@@ -1,6 +1,6 @@
 package com.onaonline.lami.lami_backend.rideoptions.lux;
 
-import com.onaonline.lami.lami_backend.home.UserValidationService;
+import com.onaonline.lami.lami_backend.user.UserValidationService;
 import com.onaonline.lami.lami_backend.rideoptions.Ride;
 import com.onaonline.lami.lami_backend.rideoptions.RideRequestDTO;
 import lombok.RequiredArgsConstructor;

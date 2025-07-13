@@ -1,4 +1,4 @@
-package com.onaonline.lami.lami_backend.data.details;
+package com.onaonline.lami.lami_backend.database.details;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;

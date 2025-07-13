@@ -1,9 +1,9 @@
 package com.onaonline.lami.lami_backend.rideoptions.lami;
 
-import com.onaonline.lami.lami_backend.data.details.LamiDriverDetails;
-import com.onaonline.lami.lami_backend.data.details.RideDetailsLami;
-import com.onaonline.lami.lami_backend.data.repos.LamiDriverRepository;
-import com.onaonline.lami.lami_backend.data.repos.RideRepositoryLami;
+import com.onaonline.lami.lami_backend.database.details.LamiDriverDetails;
+import com.onaonline.lami.lami_backend.database.details.RideDetailsLami;
+import com.onaonline.lami.lami_backend.database.repos.LamiDriverRepository;
+import com.onaonline.lami.lami_backend.database.repos.RideRepositoryLami;
 import com.onaonline.lami.lami_backend.util.BoundingBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

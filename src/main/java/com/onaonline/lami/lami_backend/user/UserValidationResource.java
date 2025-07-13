@@ -1,6 +1,6 @@
-package com.onaonline.lami.lami_backend.home;
+package com.onaonline.lami.lami_backend.user;
 
-import com.onaonline.lami.lami_backend.data.details.UserDetails;
+import com.onaonline.lami.lami_backend.database.details.UserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

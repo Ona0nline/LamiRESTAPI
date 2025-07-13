@@ -1,4 +1,4 @@
-package com.onaonline.lami.lami_backend.data.details;
+package com.onaonline.lami.lami_backend.database.details;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

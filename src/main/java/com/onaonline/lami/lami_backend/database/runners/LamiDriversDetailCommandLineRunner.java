@@ -1,7 +1,7 @@
-package com.onaonline.lami.lami_backend.data.runners;
+package com.onaonline.lami.lami_backend.database.runners;
 
-import com.onaonline.lami.lami_backend.data.details.LamiDriverDetails;
-import com.onaonline.lami.lami_backend.data.repos.LamiDriverRepository;
+import com.onaonline.lami.lami_backend.database.details.LamiDriverDetails;
+import com.onaonline.lami.lami_backend.database.repos.LamiDriverRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

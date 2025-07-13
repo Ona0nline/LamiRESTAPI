@@ -1,11 +1,9 @@
 package com.onaonline.lami.lami_backend.rideoptions.lux;
 
-import com.onaonline.lami.lami_backend.data.details.LamiDriverDetails;
-import com.onaonline.lami.lami_backend.data.details.LamiLuxDriverDetails;
-import com.onaonline.lami.lami_backend.data.details.RideDetailsLux;
-import com.onaonline.lami.lami_backend.data.repos.LamiLuxDriverRepository;
-import com.onaonline.lami.lami_backend.data.repos.RideRepositoryLami;
-import com.onaonline.lami.lami_backend.data.repos.RideRepositoryLux;
+import com.onaonline.lami.lami_backend.database.details.LamiLuxDriverDetails;
+import com.onaonline.lami.lami_backend.database.details.RideDetailsLux;
+import com.onaonline.lami.lami_backend.database.repos.LamiLuxDriverRepository;
+import com.onaonline.lami.lami_backend.database.repos.RideRepositoryLux;
 import com.onaonline.lami.lami_backend.util.BoundingBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

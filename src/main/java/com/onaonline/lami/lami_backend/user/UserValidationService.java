@@ -1,8 +1,8 @@
-package com.onaonline.lami.lami_backend.home;
+package com.onaonline.lami.lami_backend.user;
 
-import com.onaonline.lami.lami_backend.data.details.UserDetails;
+import com.onaonline.lami.lami_backend.database.details.UserDetails;
 
-import com.onaonline.lami.lami_backend.data.repos.UserRepository;
+import com.onaonline.lami.lami_backend.database.repos.UserRepository;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

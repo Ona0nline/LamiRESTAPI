@@ -1,14 +1,30 @@
 package com.onaonline.lami.lami_backend.rideoptions.taxi;
 
+import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatrixRequestDTO;
+import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatrixResponseDTO;
+import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatrixService;
 import com.onaonline.lami.lami_backend.rideoptions.Ride;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+//Current Location -> Ranks 20min away
+//
 @RestController
 public class TaxiResource extends Ride {
+
+    @Autowired
+    private DistanceMatrixService distanceMatrixService;
+
+    @PostMapping("/taxi/ranks")
+    public ResponseEntity<?> nearbyRanks(@RequestBody DistanceMatrixRequestDTO distanceMatrixRequestDTO) throws Exception {
+//        Purpose of this is only to find
+        DistanceMatrixResponseDTO distanceMatrixResponseDTO = distanceMatrixService.distanceCalculator(distanceMatrixRequestDTO.getStartLocation(), distanceMatrixRequestDTO.getEndLocation());
+        return ResponseEntity.ok("under construction");
+
+    }
 
     @GetMapping("/taxi")
     public Map<String, Object> taxi() {

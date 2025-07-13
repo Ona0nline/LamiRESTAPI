@@ -1,4 +1,4 @@
-package com.onaonline.lami.lami_backend.data.runners;
+package com.onaonline.lami.lami_backend.database.runners;
 
 import org.springframework.stereotype.Component;
 
