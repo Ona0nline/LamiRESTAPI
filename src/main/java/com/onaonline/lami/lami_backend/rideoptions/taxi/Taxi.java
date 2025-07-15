@@ -1,4 +1,6 @@
 package com.onaonline.lami.lami_backend.rideoptions.taxi;
 
-public class Taxi {
+import com.onaonline.lami.lami_backend.rideoptions.Ride;
+
+public class Taxi extends Ride {
 }

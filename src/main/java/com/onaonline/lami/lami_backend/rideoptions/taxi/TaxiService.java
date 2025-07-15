@@ -1,7 +1,9 @@
 package com.onaonline.lami.lami_backend.rideoptions.taxi;
 
 import com.onaonline.lami.lami_backend.database.details.LamiDriverDetails;
+import com.onaonline.lami.lami_backend.database.details.RoutesDetails;
 import com.onaonline.lami.lami_backend.database.details.TaxiRankDetails;
+import com.onaonline.lami.lami_backend.database.repos.RoutesRepository;
 import com.onaonline.lami.lami_backend.database.repos.TaxiRankRepository;
 import com.onaonline.lami.lami_backend.util.BoundingBox;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class TaxiService {
 
     @Autowired
     private TaxiRankRepository taxiRankRepository;
+
+    @Autowired
+    private RoutesRepository routesRepository;
 
     private BoundingBox boundingBox = new BoundingBox();
 
@@ -39,8 +44,27 @@ public class TaxiService {
             );
         }
 
-
         return taxiRanks;
 
+    }
+
+    public List<Map<String, Object>> routeByRankid(Long id){
+
+        List<RoutesDetails> databaseRoutes = routesRepository.findByRankId(id);
+        ArrayList<Map<String, Object>> routes = new ArrayList<>();
+        if(!databaseRoutes.isEmpty()){
+            for(RoutesDetails route : databaseRoutes){
+                routes.add(Map.of(
+                        "id", route.getId(),
+                        "startLocation",route.getStartLocation(),
+                        "endLocation",route.getEndLocation(),
+                        "fare",route.getFare(),
+                        "rankID",route.getRankId()
+
+                ));
+            }
+        }
+
+        return routes;
     }
 }
