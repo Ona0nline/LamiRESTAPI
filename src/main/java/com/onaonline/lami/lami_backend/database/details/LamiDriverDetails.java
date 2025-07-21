@@ -23,10 +23,11 @@ public class LamiDriverDetails {
     private double longitude;
     private String placeName;
     private String ride_status;
+    private String perks;
 
 //    Location data changing from location -> place name, lat and long
 
-    public LamiDriverDetails( String drivername, String driveridnumber, String phonenumber, String email, boolean availiable, String license_plate, double latitude, double longitude, String placeName, String ride_status) {
+    public LamiDriverDetails( String drivername, String driveridnumber, String phonenumber, String email, boolean availiable, String license_plate, double latitude, double longitude, String placeName, String ride_status, String perks) {
         this.drivername = drivername;
         this.driveridnumber = driveridnumber;
         this.phonenumber = phonenumber;
@@ -37,6 +38,7 @@ public class LamiDriverDetails {
         this.longitude = longitude;
         this.placeName = placeName;
         this.ride_status = ride_status;
+        this.perks = perks;
     }
 
     public LamiDriverDetails() {

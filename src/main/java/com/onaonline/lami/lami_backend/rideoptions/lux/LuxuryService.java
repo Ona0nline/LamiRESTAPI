@@ -1,5 +1,6 @@
 package com.onaonline.lami.lami_backend.rideoptions.lux;
 
+import com.onaonline.lami.lami_backend.database.details.LamiDriverDetails;
 import com.onaonline.lami.lami_backend.database.details.LamiLuxDriverDetails;
 import com.onaonline.lami.lami_backend.database.details.RideDetailsLux;
 import com.onaonline.lami.lami_backend.database.repos.LamiLuxDriverRepository;
@@ -15,7 +16,7 @@ import java.util.Optional;
 
 @Service
 public class LuxuryService {
-    private BoundingBox boundingBox;
+    private final BoundingBox boundingBox = new BoundingBox();
 
     @Autowired
     private LamiLuxDriverRepository lamiLuxDriverRepository;
@@ -23,31 +24,35 @@ public class LuxuryService {
     @Autowired
     private RideRepositoryLux rideRepositoryLux;
 
-    public List<Map<String, Object>> displayavailablerides(Long id) {
+    public List<Map<String, Object>> displayavailablerides(double startLocationLat, double startLocationLong) {
 
-//        This desn't make sense lowkey because where are you gonna see a Rolls Royce randomly hanging around?
-//        LamiLux on pause for now
-//        BoundingBox boundingBox1 = boundingBox.calculateBoundingBox(startLocationLat,startLocationLong,12.5);
-        Optional<LamiLuxDriverDetails> nearbyDrivers = lamiLuxDriverRepository.findById(id);
-        List<LamiLuxDriverDetails> drvers = nearbyDrivers.stream().toList();
+        BoundingBox boundingBox1 = boundingBox.calculateBoundingBox(startLocationLat,startLocationLong,12.5);
+        List<LamiLuxDriverDetails> nearbyDrivers = lamiLuxDriverRepository.
+                findByLatitudeBetweenAndLongitudeBetween(boundingBox1.latMin,
+                boundingBox1.latMax, boundingBox1.lonMin, boundingBox1.lonMax);
 
-//Need to figure out how "close" drivers are based off of
-//        double circle_distance = haversine(startLocationLat,startLocationLong)
+        System.out.println("Available drivers: " + nearbyDrivers);
 
         ArrayList<Map<String, Object>> availabledrivers = new ArrayList<>();
-
-        if(nearbyDrivers.isPresent()){
-            for (LamiLuxDriverDetails driver : drvers) {
+        if(!nearbyDrivers.isEmpty()){
+            for (LamiLuxDriverDetails driver : nearbyDrivers) {
                 availabledrivers.add(Map.of(
                         "id", driver.getId(),
                         "drivername", driver.getDrivername(),
                         "licensePlate",driver.getLicense_plate(),
-                        "fare","R50"
+                        "latitude",driver.getLatitude(),
+                        "longitude", driver.getLongitude(),
+                        "placename", driver.getPlacename(),
+                        "qualification",driver.getDriverlevel(),
+                        "perks",driver.getPerks(),
+                        "car",driver.getCar()
                 ));
             }
         }
+        System.out.println("No nearby drivers");
 
         return availabledrivers;
+
     }
 
 

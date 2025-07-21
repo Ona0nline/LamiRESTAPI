@@ -26,6 +26,12 @@ public class LamiLuxDriverDetails {
     @ElementCollection
     private List<String> perks = new ArrayList<>();
     private String driverlevel;
+    private double latitude;
+    private double longitude;
+    private String placename;
+
+    public <T> LamiLuxDriverDetails(String thembaZwane, String number, String s, String mail, boolean b, String audiR8, String s1, String advancedDefensiveDriving, List<T> list, String s2, double v, double v1, String s3) {
+    }
 
     @Override
     public String toString() {

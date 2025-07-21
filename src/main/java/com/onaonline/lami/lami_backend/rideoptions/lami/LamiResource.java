@@ -27,10 +27,6 @@ public class LamiResource extends Ride {
 
     @Autowired
     private DistanceMatrixService distanceMatrixService;
-//    Plan:
-//    DistanceMatrixDTO -> returning duration,distance,fare.
-//    Same endpoint, DistanceMatrixDTO startLocation gets geocoded -> Use those coords to find available drivers
-
 
     @PostMapping("/lami/available-rides")
     public ResponseEntity<Object> availablerides(@RequestBody DistanceMatrixRequestDTO distanceMatrixRequestDTO) throws Exception {

@@ -1,5 +1,11 @@
 package com.onaonline.lami.lami_backend.rideoptions.lux;
 
+import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatrixRequestDTO;
+import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatrixResponseDTO;
+import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatrixService;
+import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeResponseDTO;
+import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeService;
+import com.onaonline.lami.lami_backend.rideoptions.lami.AvailableRidesResponseDTO;
 import com.onaonline.lami.lami_backend.user.UserValidationService;
 import com.onaonline.lami.lami_backend.rideoptions.Ride;
 import com.onaonline.lami.lami_backend.rideoptions.RideRequestDTO;
@@ -16,18 +22,24 @@ import java.util.Map;
 public class LuxResource extends Ride {
 
     @Autowired
-    private UserValidationService userValidationService;
+    private GeocodeService geocodeService;
 
     @Autowired
     private LuxuryService luxuryService;
 
+    @Autowired
+    private DistanceMatrixService distanceMatrixService;
+
     @PostMapping("/luxury/available-rides")
-    public ResponseEntity<?> availabledrivers(@RequestBody RideRequestDTO rideRequestDTO){
-        List<Map<String, Object>> available_drivers = luxuryService.displayavailablerides(rideRequestDTO.getId());
-        if(available_drivers.isEmpty()){
-            return ResponseEntity.ok("No available drivers");
-        }
-        return ResponseEntity.ok(available_drivers);
+    public ResponseEntity<?> availabledrivers(@RequestBody DistanceMatrixRequestDTO distanceMatrixRequestDTO) throws Exception {
+        DistanceMatrixResponseDTO distanceMatrixResponse = distanceMatrixService.distanceCalculator(distanceMatrixRequestDTO.getStartLocation(),distanceMatrixRequestDTO.getEndLocation());
+        GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(distanceMatrixRequestDTO.getStartLocation());
+        System.out.println(geocodeResponseDTO);
+        System.out.println("Lat: " + geocodeResponseDTO.getLatitude() + " And Long: " +geocodeResponseDTO.getLongitude());
+        List<Map<String, Object>> results = luxuryService.displayavailablerides(geocodeResponseDTO.getLatitude(),geocodeResponseDTO.getLongitude());
+        AvailableRidesResponseDTO availableRidesResponse = new AvailableRidesResponseDTO(distanceMatrixResponse,results);
+        if (results.isEmpty()) return ResponseEntity.ok("List empty");
+        return ResponseEntity.ok(availableRidesResponse);
     }
 
 

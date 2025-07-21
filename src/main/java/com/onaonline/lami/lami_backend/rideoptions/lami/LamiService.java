@@ -19,12 +19,11 @@ public class LamiService {
     private  LamiDriverRepository lamiDriverRepository;
     @Autowired
     private RideRepositoryLami rideRepositoryLami;
-    private  BoundingBox boundingBox = new BoundingBox();
+    private final BoundingBox boundingBox = new BoundingBox();
 
 
-//    Coords to be passed in here should come from geocode service result set
     public List<Map<String, Object>> displayavailablerides(double startLocationLat, double startLocationLong) {
-//        Creates boundary (dimensions being min and max of start location coords), to filter list of available drivers
+
         BoundingBox boundingBox1 = boundingBox.calculateBoundingBox(startLocationLat,startLocationLong,12.5);
         List<LamiDriverDetails> nearbyDrivers = lamiDriverRepository.findByLatitudeBetweenAndLongitudeBetweenAndAvailiable(boundingBox1.latMin,
                 boundingBox1.latMax, boundingBox1.lonMin, boundingBox1.lonMax, true);
@@ -39,7 +38,8 @@ public class LamiService {
                         "licensePlate",driver.getLicense_plate(),
                         "latitude",driver.getLatitude(),
                         "longitude", driver.getLongitude(),
-                        "placeName", driver.getPlaceName()
+                        "placeName", driver.getPlaceName(),
+                        "perks", driver.getPerks()
                 ));
             }
         }
@@ -47,7 +47,6 @@ public class LamiService {
         return availabledrivers;
     }
 
-//    This logic doesnt actually make sense, should request ride from the available drivers method above
 
     public RideDetailsLami bookride(Lami lami) {
 
