@@ -28,9 +28,12 @@ public class LamiResource extends Ride {
     @Autowired
     private DistanceMatrixService distanceMatrixService;
 
+//    session attribute stuff should move here too
+
     @PostMapping("/lami/available-rides")
     public ResponseEntity<Object> availablerides(@RequestBody DistanceMatrixRequestDTO distanceMatrixRequestDTO) throws Exception {
 //        Ride response for user (Distance, duration, fare)
+//        also need to return how far away the driver is away from youuu
         DistanceMatrixResponseDTO distanceMatrixResponse = distanceMatrixService.distanceCalculator(distanceMatrixRequestDTO.getStartLocation(),distanceMatrixRequestDTO.getEndLocation());
         GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(distanceMatrixRequestDTO.getStartLocation());
         System.out.println(geocodeResponseDTO);
@@ -43,6 +46,8 @@ public class LamiResource extends Ride {
 
     @PostMapping("/lami/request-ride")
     public ResponseEntity<RideDetailsLami> requestride(@RequestBody Lami lami) {
+//        Store the ride that person requested in a session attribute, and access it from there to cancel
+//        New Ride details will include start and end location details to be editted
         return ResponseEntity.ok(lamiService.bookride(lami));
     }
 

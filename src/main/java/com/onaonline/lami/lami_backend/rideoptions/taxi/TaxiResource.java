@@ -26,6 +26,7 @@ public class TaxiResource extends Ride {
     @Autowired
     private TaxiService taxiService;
 
+//
     @PostMapping("/taxi/ranks")
     public ResponseEntity<?> nearbyRanks(@RequestBody GeocodeRequestDTO geocodeRequestDTO) throws Exception {
 //        Purpose of this is only to find
