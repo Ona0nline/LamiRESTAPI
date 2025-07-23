@@ -51,6 +51,7 @@ public class TaxiService {
     public List<Map<String, Object>> routeByRankid(Long id){
 
         List<RoutesDetails> databaseRoutes = routesRepository.findByRankId(id);
+        System.out.println("Exisiting routes from database " + databaseRoutes);
         ArrayList<Map<String, Object>> routes = new ArrayList<>();
         if(!databaseRoutes.isEmpty()){
             for(RoutesDetails route : databaseRoutes){

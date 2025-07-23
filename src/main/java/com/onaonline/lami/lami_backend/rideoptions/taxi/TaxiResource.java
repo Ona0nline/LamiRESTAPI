@@ -1,5 +1,6 @@
 package com.onaonline.lami.lami_backend.rideoptions.taxi;
 
+import com.onaonline.lami.lami_backend.database.details.RoutesDetails;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeRequestDTO;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeResponseDTO;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeService;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,12 +46,16 @@ public class TaxiResource extends Ride {
             return ResponseEntity.badRequest().body("No cached ranks found in session. Please search again.");
         }
 
+        List<Map<String, Object>> routesDetails = new ArrayList<>();
+
         for(Map<String, Object> rank : nearbyRanks){
-            if(routeRequestDTO.getRankId() == rank.get("id")){
-                taxiService.routeByRankid(routeRequestDTO.getRankId());
+            System.out.println(rank);
+
+            if(routeRequestDTO.getRankId().equals(Long.valueOf(rank.get("id").toString()))){
+                routesDetails = taxiService.routeByRankid(routeRequestDTO.getRankId());
             }
         }
-        return ResponseEntity.ok(taxiService.routeByRankid(routeRequestDTO.getRankId()));
+        return ResponseEntity.ok(routesDetails);
     }
 
 }
