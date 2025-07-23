@@ -56,6 +56,7 @@ public class LamiService {
         LamiDriverDetails driver = lamiDriverRepository.findById(lami.getDriverid())
                 .orElseThrow(() -> new RuntimeException("Driver not found"));
 
+//        Fix this to store start and end location WITH lat and long instead of placename
         RideDetailsLami confirmedRide = RideDetailsLami.builder().
                 placename(driver.getPlaceName()).latitude(driver.getLatitude())
                 .longitude(driver.getLongitude())
