@@ -37,7 +37,7 @@ public class LuxResource extends Ride {
         System.out.println(geocodeResponseDTO);
         System.out.println("Lat: " + geocodeResponseDTO.getLatitude() + " And Long: " +geocodeResponseDTO.getLongitude());
         List<Map<String, Object>> results = luxuryService.displayavailablerides(geocodeResponseDTO.getLatitude(),geocodeResponseDTO.getLongitude());
-        AvailableRidesResponseDTO availableRidesResponse = new AvailableRidesResponseDTO(distanceMatrixResponse,results);
+        AvailableRidesResponseDTO availableRidesResponse = new AvailableRidesResponseDTO(distanceMatrixResponse,results, distanceMatrixRequestDTO.getStartLocation(), distanceMatrixRequestDTO.getEndLocation());
         if (results.isEmpty()) return ResponseEntity.ok("List empty");
         return ResponseEntity.ok(availableRidesResponse);
     }

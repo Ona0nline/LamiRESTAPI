@@ -14,6 +14,8 @@ public class RideDetailsLami {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
     public String placename;
+    public String startLocation;
+    public String endLocation;
     public double latitude;
     public double longitude;
     public String fare;

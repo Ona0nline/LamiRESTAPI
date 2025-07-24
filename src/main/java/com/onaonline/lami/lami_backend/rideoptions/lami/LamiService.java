@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class LamiService {
@@ -60,7 +61,6 @@ public class LamiService {
         RideDetailsLami confirmedRide = RideDetailsLami.builder().
                 placename(driver.getPlaceName()).latitude(driver.getLatitude())
                 .longitude(driver.getLongitude())
-                .fare("R" + lami.getFare())
                 .driver(driver)
                 .build();
 
@@ -69,4 +69,29 @@ public class LamiService {
 
     }
 
+    public String cancelRide(Long id){
+
+        Optional<RideDetailsLami> optionalRideDetailsLami = rideRepositoryLami.findById(id);
+        if(optionalRideDetailsLami.isPresent()){
+            Long foundRide = optionalRideDetailsLami.get().id;
+            rideRepositoryLami.deleteById(foundRide);
+            return "Ride successfully cancelled";
+        }
+            return "Ride was not requested";
+
+    }
+
+
+    public String editRide(String newStartLocation, String newEndLocation, RideDetailsLami requestedRide) {
+        Optional<RideDetailsLami> optionalRideDetailsLami = rideRepositoryLami.findById(requestedRide.id);
+
+        if(optionalRideDetailsLami.isPresent()){
+            RideDetailsLami databaseRideDetails = optionalRideDetailsLami.get();
+            databaseRideDetails.startLocation = newStartLocation;
+            databaseRideDetails.endLocation = newEndLocation;
+            rideRepositoryLami.save(databaseRideDetails);
+            return "Location successfully updated";
+        }
+        return "Ride was not requested";
+    }
 }
