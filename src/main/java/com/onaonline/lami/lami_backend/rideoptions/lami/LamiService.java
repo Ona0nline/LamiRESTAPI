@@ -49,18 +49,18 @@ public class LamiService {
     }
 
 
-    public RideDetailsLami bookride(Lami lami) {
+    public RideDetailsLami bookride(Long driverid, String start, String end, String fare) {
 
-        if (lami.getDriverid() == null) {
-            throw new RuntimeException("Driver ID is missing from the request.");
-        }
-        LamiDriverDetails driver = lamiDriverRepository.findById(lami.getDriverid())
+        LamiDriverDetails driver = lamiDriverRepository.findById(driverid)
                 .orElseThrow(() -> new RuntimeException("Driver not found"));
 
 //        Fix this to store start and end location WITH lat and long instead of placename
-        RideDetailsLami confirmedRide = RideDetailsLami.builder().
-                placename(driver.getPlaceName()).latitude(driver.getLatitude())
+        RideDetailsLami confirmedRide = RideDetailsLami.builder()
+                .latitude(driver.getLatitude())
                 .longitude(driver.getLongitude())
+                .startLocation(start)
+                .endLocation(end)
+                .fare(fare)
                 .driver(driver)
                 .build();
 

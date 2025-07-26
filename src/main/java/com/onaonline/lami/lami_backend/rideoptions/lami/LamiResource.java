@@ -37,27 +37,33 @@ public class LamiResource extends Ride {
 
     @PostMapping("/lami/available-rides")
     public ResponseEntity<Object> availablerides(@RequestBody DistanceMatrixRequestDTO distanceMatrixRequestDTO) throws Exception {
-//        Ride response for user (Distance, duration, fare)
-//        also need to return how far away the driver is away from youuu
+
+//        Users start and end locations in a session
+        session.setAttribute("startLocation", distanceMatrixRequestDTO.getStartLocation());
+        session.setAttribute("endLocation", distanceMatrixRequestDTO.getEndLocation());
+
         DistanceMatrixResponseDTO distanceMatrixResponse = distanceMatrixService.distanceCalculator(distanceMatrixRequestDTO.getStartLocation(),distanceMatrixRequestDTO.getEndLocation());
+        session.setAttribute("fare", distanceMatrixResponse.getFare());
         GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(distanceMatrixRequestDTO.getStartLocation());
         System.out.println(distanceMatrixResponse);
         List<Map<String, Object>> results = lamiService.displayavailablerides(geocodeResponseDTO.getLatitude(),geocodeResponseDTO.getLongitude());
 
-        AvailableRidesResponseDTO availableRidesResponse = new AvailableRidesResponseDTO(distanceMatrixResponse,results, distanceMatrixRequestDTO.getStartLocation(), distanceMatrixRequestDTO.getEndLocation()
-        );
+        AvailableRidesResponseDTO availableRidesResponse = new AvailableRidesResponseDTO(distanceMatrixResponse,results, distanceMatrixRequestDTO.getStartLocation(), distanceMatrixRequestDTO.getEndLocation());
         if (results.isEmpty()) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(availableRidesResponse);
     }
 
 
     @PostMapping("/lami/request-ride")
-    public ResponseEntity<RideDetailsLami> requestride(@RequestBody Lami lami) {
-//        Store the ride that person requested in a session attribute, and access it from there to cancel
-//        New Ride details will include start and end location details to be editted
-        RideDetailsLami rideDetailsLami = lamiService.bookride(lami);
+    public ResponseEntity<RideDetailsLami> requestride(@RequestBody UserLocationDTO userLocationDTO) {
+//        Session attributes
+        String userStart = (String) session.getAttribute("startLocation");
+        String userEnd = (String) session.getAttribute("endLocation");
+        String rideFare = (String) session.getAttribute("fare");
+
+        RideDetailsLami rideDetailsLami = lamiService.bookride(userLocationDTO.getDriverId(), userStart,userEnd,rideFare);
         session.setAttribute("requestedRide", rideDetailsLami);
-        return ResponseEntity.ok(lamiService.bookride(lami));
+        return ResponseEntity.ok(rideDetailsLami);
     }
 
     @DeleteMapping("/lami/cancel-ride")
