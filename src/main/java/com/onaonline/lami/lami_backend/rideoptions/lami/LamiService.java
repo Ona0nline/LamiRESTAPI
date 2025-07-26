@@ -49,7 +49,7 @@ public class LamiService {
     }
 
 
-    public RideDetailsLami bookride(Long driverid, String start, String end, String fare) {
+    public RideDetailsLami bookride(Long driverid, String start, String end, String fare, String email) {
 
         LamiDriverDetails driver = lamiDriverRepository.findById(driverid)
                 .orElseThrow(() -> new RuntimeException("Driver not found"));
@@ -62,6 +62,7 @@ public class LamiService {
                 .endLocation(end)
                 .fare(fare)
                 .driver(driver)
+                .email(email)
                 .build();
 
         rideRepositoryLami.save(confirmedRide);
@@ -93,5 +94,15 @@ public class LamiService {
             return "Location successfully updated";
         }
         return "Ride was not requested";
+    }
+
+    public List<RideDetailsLami> rideHistory(String email) {
+
+        List<RideDetailsLami> userRideDetails = rideRepositoryLami.findByEmail(email);
+        if(!userRideDetails.isEmpty()){
+            return userRideDetails;
+        }
+        return new ArrayList<>();
+
     }
 }

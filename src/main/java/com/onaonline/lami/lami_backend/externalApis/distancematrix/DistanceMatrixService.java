@@ -31,7 +31,7 @@ public class DistanceMatrixService {
                 "?destinations=" + encodedEnd +
                 "&origins=" + encodedStart +
                 "&units=metric" +
-                "&mode=transit" +
+                "&mode=driving" +
                 "&key=" + apiKey;
 
     }
@@ -102,8 +102,10 @@ public class DistanceMatrixService {
             double fare = (475 * (distanceMeters / 1000.0)) / 100;
             return new DistanceMatrixLuxResponseDTO(durationSeconds, distanceMeters, fare);
 
-        }
-        else {
+        } else if (status.equals("ZERO_RESULTS")) {
+            return new DistanceMatrixLuxResponseDTO("No results from google maps api");
+
+        } else {
             throw new Exception();
         }
     }

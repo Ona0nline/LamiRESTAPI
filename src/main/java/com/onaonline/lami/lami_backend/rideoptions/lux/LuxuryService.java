@@ -1,6 +1,5 @@
 package com.onaonline.lami.lami_backend.rideoptions.lux;
 
-import com.onaonline.lami.lami_backend.database.details.LamiDriverDetails;
 import com.onaonline.lami.lami_backend.database.details.LamiLuxDriverDetails;
 import com.onaonline.lami.lami_backend.database.details.RideDetailsLux;
 import com.onaonline.lami.lami_backend.database.repos.LamiLuxDriverRepository;
@@ -57,7 +56,7 @@ public class LuxuryService {
     }
 
 
-    public RideDetailsLux bookride(Long id, String start, String end, double fare) {
+    public RideDetailsLux bookride(Long id, String start, String end, double fare,String email) {
 
         LamiLuxDriverDetails luxdriver = lamiLuxDriverRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Driver not found"));
@@ -70,10 +69,45 @@ public class LuxuryService {
                                 .endLocation(end)
                                 .totalfare(totalFare)
                                 .driver(luxdriver)
+                                .email(email)
                                 .build();
 
         rideRepositoryLux.save(confirmedRide);
         return confirmedRide;
 
+    }
+
+    public String cancelRide(Long id){
+
+        Optional<RideDetailsLux> optionalRideDetailsLami = rideRepositoryLux.findById(id);
+        if(optionalRideDetailsLami.isPresent()){
+            Long foundRide = optionalRideDetailsLami.get().id;
+            rideRepositoryLux.deleteById(foundRide);
+            return "Ride successfully cancelled";
+        }
+        return "Ride was not requested";
+
+    }
+
+
+    public String editRide(String newStartLocation, String newEndLocation, RideDetailsLux requestedRide) {
+        Optional<RideDetailsLux> optionalRideDetailsLami = rideRepositoryLux.findById(requestedRide.id);
+
+        if(optionalRideDetailsLami.isPresent()){
+            RideDetailsLux databaseRideDetails = optionalRideDetailsLami.get();
+            databaseRideDetails.startLocation = newStartLocation;
+            databaseRideDetails.endLocation = newEndLocation;
+            rideRepositoryLux.save(databaseRideDetails);
+            return "Location successfully updated";
+        }
+        return "Ride was not requested";
+    }
+
+    public List<RideDetailsLux> rideHistory(String email) {
+        List<RideDetailsLux> userRideDetails = rideRepositoryLux.findByEmail(email);
+        if(!userRideDetails.isEmpty()){
+            return userRideDetails;
+        }
+        return new ArrayList<>();
     }
 }

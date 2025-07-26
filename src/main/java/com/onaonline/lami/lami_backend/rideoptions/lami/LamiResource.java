@@ -60,8 +60,9 @@ public class LamiResource extends Ride {
         String userStart = (String) session.getAttribute("startLocation");
         String userEnd = (String) session.getAttribute("endLocation");
         String rideFare = (String) session.getAttribute("fare");
+        String email = (String) session.getAttribute("email");
 
-        RideDetailsLami rideDetailsLami = lamiService.bookride(userLocationDTO.getDriverId(), userStart,userEnd,rideFare);
+        RideDetailsLami rideDetailsLami = lamiService.bookride(userLocationDTO.getDriverId(), userStart,userEnd,rideFare, email);
         session.setAttribute("requestedRide", rideDetailsLami);
         return ResponseEntity.ok(rideDetailsLami);
     }
@@ -78,6 +79,16 @@ public class LamiResource extends Ride {
         return ResponseEntity.ok(lamiService.editRide(editRideDTO.getNewStartLocation(), editRideDTO.getNewEndLocation(), requestedRide));
     }
 
+    @GetMapping("/lami/ride-history")
+    public ResponseEntity<?> getRideHistory(HttpSession session){
+        String email = (String) session.getAttribute("email");
+        List<RideDetailsLami> rides = lamiService.rideHistory(email);
+
+        if(rides.isEmpty()){
+            return ResponseEntity.ok("Ride history empty");
+        }
+        return ResponseEntity.ok(rides);
+    }
 //    Is a service method neccessary since we're storing sessions? Should I send the entire session over to the service?
 
 

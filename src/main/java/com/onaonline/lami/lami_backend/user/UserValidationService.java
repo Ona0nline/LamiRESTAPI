@@ -1,5 +1,6 @@
 package com.onaonline.lami.lami_backend.user;
 
+import com.onaonline.lami.lami_backend.database.details.RideDetailsLami;
 import com.onaonline.lami.lami_backend.database.details.UserDetails;
 
 import com.onaonline.lami.lami_backend.database.repos.UserRepository;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -101,6 +103,7 @@ public class UserValidationService {
         return user.get().getId();
 
     }
+
 
 
 }

@@ -1,6 +1,10 @@
 package com.onaonline.lami.lami_backend.user;
 
+import com.onaonline.lami.lami_backend.database.details.RideDetailsLami;
 import com.onaonline.lami.lami_backend.database.details.UserDetails;
+import com.onaonline.lami.lami_backend.rideoptions.lami.LamiService;
+import com.onaonline.lami.lami_backend.rideoptions.lux.LuxuryService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +12,24 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
 public class UserValidationResource {
 
+    @Autowired
+    HttpSession session;
+
+    @Autowired
     private UserValidationService homeService;
+
+    @Autowired
+    private LamiService lamiService;
+
+    @Autowired
+    private LuxuryService luxuryService;
 
     @Autowired
     public UserValidationResource(UserValidationService homeService) {
@@ -37,6 +52,7 @@ public class UserValidationResource {
     public ResponseEntity<String> login(@Valid @RequestBody LoginDTO loginDTO){
 //    Response entity returns http responses (status, headers and body)
         if(homeService.login(loginDTO.getEmail(), loginDTO.getPassword())){
+            session.setAttribute("email", loginDTO.getEmail());
             return ResponseEntity.ok("Login Successful");
         }
         return ResponseEntity.status(401).body("Unauthorized login");
@@ -81,6 +97,9 @@ public class UserValidationResource {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed or user not found.");
 
     }
+
+
+
 
 
 }

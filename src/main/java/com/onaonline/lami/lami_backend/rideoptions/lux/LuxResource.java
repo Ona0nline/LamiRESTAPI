@@ -1,5 +1,6 @@
 package com.onaonline.lami.lami_backend.rideoptions.lux;
 
+import com.onaonline.lami.lami_backend.database.details.RideDetailsLami;
 import com.onaonline.lami.lami_backend.database.details.RideDetailsLux;
 import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatrixLuxResponseDTO;
 import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatrixRequestDTO;
@@ -7,6 +8,8 @@ import com.onaonline.lami.lami_backend.externalApis.distancematrix.DistanceMatri
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeResponseDTO;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeService;
 import com.onaonline.lami.lami_backend.rideoptions.lami.AvailableRidesResponseDTO;
+import com.onaonline.lami.lami_backend.rideoptions.lami.CancelRideRequestDTO;
+import com.onaonline.lami.lami_backend.rideoptions.lami.EditRideDTO;
 import com.onaonline.lami.lami_backend.rideoptions.lami.UserLocationDTO;
 import com.onaonline.lami.lami_backend.rideoptions.Ride;
 import jakarta.servlet.http.HttpSession;
@@ -60,10 +63,34 @@ public class LuxResource extends Ride {
         String userStart = (String) session.getAttribute("startLocation");
         String userEnd = (String) session.getAttribute("endLocation");
         double rideFare = (double) session.getAttribute("fare");
+        String email = (String) session.getAttribute("email");
 
-        RideDetailsLux rideDetailsLux = luxuryService.bookride(userLocationDTO.getDriverId(),userStart,userEnd,rideFare);
+        RideDetailsLux rideDetailsLux = luxuryService.bookride(userLocationDTO.getDriverId(),userStart,userEnd,rideFare, email);
         session.setAttribute("requestedRide", rideDetailsLux);
 
         return ResponseEntity.ok(rideDetailsLux);
+    }
+
+    @DeleteMapping("/lamilux/cancel-ride")
+    public ResponseEntity<?> cancelride(@RequestBody CancelRideRequestDTO cancelRideRequestDTO){
+//        Should remove the ride from the session and from the database
+        return ResponseEntity.ok(luxuryService.cancelRide(cancelRideRequestDTO.getRideId()));
+    }
+
+    @PutMapping("/lamilux/edit-ride")
+    public ResponseEntity<?> editRide(@RequestBody EditRideDTO editRideDTO) {
+        RideDetailsLux requestedRide = (RideDetailsLux) session.getAttribute("requestedRide");
+        return ResponseEntity.ok(luxuryService.editRide(editRideDTO.getNewStartLocation(), editRideDTO.getNewEndLocation(), requestedRide));
+    }
+
+    @GetMapping("/lamilux/ride-history")
+    public ResponseEntity<?> getRideHistory(HttpSession session){
+        String email = (String) session.getAttribute("email");
+        List<RideDetailsLux> rides = luxuryService.rideHistory(email);
+
+        if(rides.isEmpty()){
+            return ResponseEntity.ok("Ride history empty");
+        }
+        return ResponseEntity.ok(rides);
     }
 }

@@ -18,6 +18,7 @@ public class RideDetailsLux {
     public double latitude;
     public double longitude;
     public double totalfare;
+    public String email;
     //    Relationship between tables
     @ManyToOne
     @JoinColumn(name = "driver_id", referencedColumnName = "id")
