@@ -42,7 +42,7 @@ public class LamiResource extends Ride {
         session.setAttribute("startLocation", distanceMatrixRequestDTO.getStartLocation());
         session.setAttribute("endLocation", distanceMatrixRequestDTO.getEndLocation());
 
-        DistanceMatrixResponseDTO distanceMatrixResponse = distanceMatrixService.distanceCalculator(distanceMatrixRequestDTO.getStartLocation(),distanceMatrixRequestDTO.getEndLocation());
+        DistanceMatrixResponseDTO distanceMatrixResponse = distanceMatrixService.distanceCalculatorLami(distanceMatrixRequestDTO.getStartLocation(),distanceMatrixRequestDTO.getEndLocation());
         session.setAttribute("fare", distanceMatrixResponse.getFare());
         GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(distanceMatrixRequestDTO.getStartLocation());
         System.out.println(distanceMatrixResponse);

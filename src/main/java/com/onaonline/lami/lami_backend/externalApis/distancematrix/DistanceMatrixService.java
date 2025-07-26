@@ -1,12 +1,14 @@
 package com.onaonline.lami.lami_backend.externalApis.distancematrix;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @Service
 public class DistanceMatrixService {
@@ -21,17 +23,23 @@ public class DistanceMatrixService {
         this.objectMapper = objectMapper;
     }
 
-    public DistanceMatrixResponseDTO distanceCalculator(String startLocation, String endLocation) throws Exception {
-        String url = "https://maps.googleapis.com/maps/api/distancematrix/json\n" +
-                "  ?destinations=" + endLocation +
-                "  &origins=" + startLocation +
-                "  &units=metric" +
-                "&mode=transit" +
-                "  &key=" + apiKey;
+    private String apiUrl(String startLocation, String endLocation){
+        String encodedStart = URLEncoder.encode(startLocation, StandardCharsets.UTF_8);
+        String encodedEnd = URLEncoder.encode(endLocation, StandardCharsets.UTF_8);
 
-        String apiresponse = restTemplate.getForObject(url, String.class);
+        return "https://maps.googleapis.com/maps/api/distancematrix/json" +
+                "?destinations=" + encodedEnd +
+                "&origins=" + encodedStart +
+                "&units=metric" +
+                "&mode=transit" +
+                "&key=" + apiKey;
+
+    }
+
+    public DistanceMatrixResponseDTO distanceCalculatorLami(String startLocation, String endLocation) throws Exception {
+
+        String apiresponse = restTemplate.getForObject(apiUrl(startLocation,endLocation), String.class);
         JsonNode root = objectMapper.readTree(apiresponse);
-        System.out.println(apiresponse);
         JsonNode element = root
                 .path("rows")
                 .get(0)
@@ -64,10 +72,43 @@ public class DistanceMatrixService {
 
     }
 
-//
-//    public static double fareCalculation(){
-//
-//    }
+    public DistanceMatrixLuxResponseDTO distanceCalculatorLux(String startLocation, String endLocation) throws Exception {
+
+        String apiresponse = restTemplate.getForObject(apiUrl(startLocation,endLocation), String.class);
+        System.out.println(apiresponse);
+        JsonNode root = objectMapper.readTree(apiresponse);
+        JsonNode element = root
+                .path("rows")
+                .get(0)
+                .path("elements")
+                .get(0);
+
+        String status = element.path("status").asText();
+        if(status.equals("OK")){
+
+            double durationSeconds = element
+                    .path("duration")
+                    .path("value").asDouble();
+
+            double distanceMeters = element
+                    .path("distance")
+                    .path("value").asDouble();
+
+            if(durationSeconds <= 900){
+                double standardfare = (2500 / 100);
+                return new DistanceMatrixLuxResponseDTO(durationSeconds, distanceMeters, standardfare);
+            }
+
+            double fare = (475 * (distanceMeters / 1000.0)) / 100;
+            return new DistanceMatrixLuxResponseDTO(durationSeconds, distanceMeters, fare);
+
+        }
+        else {
+            throw new Exception();
+        }
+    }
+
+
 
 
 }

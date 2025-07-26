@@ -13,10 +13,11 @@ public class RideDetailsLux {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
-    public String placename;
+    public String startLocation;
+    public String endLocation;
     public double latitude;
     public double longitude;
-    public String fare;
+    public double totalfare;
     //    Relationship between tables
     @ManyToOne
     @JoinColumn(name = "driver_id", referencedColumnName = "id")

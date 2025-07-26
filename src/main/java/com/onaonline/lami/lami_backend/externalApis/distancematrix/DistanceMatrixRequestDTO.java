@@ -8,6 +8,7 @@ public class DistanceMatrixRequestDTO {
     private String endLocation;
     private String lat;
     private String lon;
+    private double luxFare;
 
 
 }

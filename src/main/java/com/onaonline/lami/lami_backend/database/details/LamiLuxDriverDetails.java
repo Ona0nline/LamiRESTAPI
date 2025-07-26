@@ -30,6 +30,7 @@ public class LamiLuxDriverDetails {
     private double latitude;
     private double longitude;
     private String placename;
+    private double fare;
 
 //    public <T> LamiLuxDriverDetails(String thembaZwane, String number, String s, String mail, boolean b, String audiR8, String s1, String advancedDefensiveDriving, List<T> list, String s2, double v, double v1, String s3) {
 //        this.drivername = thembaZwane;
@@ -37,7 +38,7 @@ public class LamiLuxDriverDetails {
 //    }
 
 
-    public LamiLuxDriverDetails(String drivername, String driveridnumber, String phonenumber, String email, boolean availiable, String car, String license_plate, String ride_status, List<String> perks, String driverlevel, double latitude, double longitude, String placename) {
+    public LamiLuxDriverDetails(String drivername, String driveridnumber, String phonenumber, String email, boolean availiable, String car, String license_plate, String ride_status, List<String> perks, String driverlevel, double latitude, double longitude, String placename, double fare) {
         this.drivername = drivername;
         this.driveridnumber = driveridnumber;
         this.phonenumber = phonenumber;
@@ -51,6 +52,7 @@ public class LamiLuxDriverDetails {
         this.latitude = latitude;
         this.longitude = longitude;
         this.placename = placename;
+        this.fare = fare;
     }
 
     @Override

@@ -45,7 +45,8 @@ public class LuxuryService {
                         "placename", driver.getPlacename(),
                         "qualification",driver.getDriverlevel(),
                         "perks",driver.getPerks(),
-                        "car",driver.getCar()
+                        "car",driver.getCar(),
+                        "fare", driver.getFare()
                 ));
             }
         }
@@ -56,20 +57,20 @@ public class LuxuryService {
     }
 
 
-    public RideDetailsLux bookride(Luxury luxury) {
+    public RideDetailsLux bookride(Long id, String start, String end, double fare) {
 
-        if (luxury.getDriverid() == null) {
-            throw new RuntimeException("Driver ID is missing from the request.");
-        }
-        LamiLuxDriverDetails luxdriver = lamiLuxDriverRepository.findById(luxury.getDriverid())
+        LamiLuxDriverDetails luxdriver = lamiLuxDriverRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Driver not found"));
 
+        double totalFare = fare + luxdriver.getFare();
         RideDetailsLux confirmedRide = RideDetailsLux.builder()
-                        .placename(luxury.getPlacename())
-                                .latitude(luxury.getLatitude())
-                                        .longitude(luxury.getLongitude())
-                .fare("R" + luxury.getFare()).
-                        driver(luxdriver).build();
+                                .latitude(luxdriver.getLatitude())
+                                .longitude(luxdriver.getLongitude())
+                                .startLocation(start)
+                                .endLocation(end)
+                                .totalfare(totalFare)
+                                .driver(luxdriver)
+                                .build();
 
         rideRepositoryLux.save(confirmedRide);
         return confirmedRide;
