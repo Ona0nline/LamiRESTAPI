@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Data;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @Entity
 @Builder
