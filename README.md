@@ -1,12 +1,12 @@
 # LamiRESTAPI
 ## Project Overview
-Lami is a ride-sharing API designed to serve users across South Africa, regardless of socio-economic status.
+**Lami** is a ride-sharing API designed to serve users across South Africa, regardless of socio-economic status.
 The service empowers users by letting them choose their own drivers based on optional perks that each driver may offer — such as curated playlists, bottled water, and more. This user-driven approach gives people control over the kind of ride experience they want.
 
-LamiLux is the premium tier of the platform, offering luxury rides for high-end users with active subscriptions. 
+**LamiLux** is the premium tier of the platform, offering luxury rides for high-end users with active subscriptions. 
 These rides feature more upscale vehicles and exclusive perks.
 
-Taxi Service is a practical feature that, based on a user's current location, lists all taxi ranks within a 20-minute walking distance. Users can then choose the closest rank and view relevant route information — no guesswork involved.
+**Taxi** Service is a practical feature that, based on a user's current location, lists all taxi ranks within a 20-minute walking distance. Users can then choose the closest rank and view relevant route information — no guesswork involved.
 
 🛠️ Next Steps
 Implement an AI chatbot to advise users on the best ride type based on their location, preferences, and urgency.
