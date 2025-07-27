@@ -1,0 +1,69 @@
+{
+	"info": {
+		"_postman_id": "b76d3f02-a11d-4752-b5d0-768f1b9be658",
+		"name": "Taxi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46086830"
+	},
+	"item": [
+		{
+			"name": "Routes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"rankId\": 1\r\n   \r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/taxi/ranks/routes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"taxi",
+						"ranks",
+						"routes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ranks",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"address\": \"Braamfontein\"\r\n   \r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9090/taxi/ranks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"taxi",
+						"ranks"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
