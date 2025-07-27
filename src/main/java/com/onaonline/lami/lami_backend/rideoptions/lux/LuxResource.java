@@ -37,7 +37,7 @@ public class LuxResource extends Ride {
     @Autowired
     HttpSession session;
 
-    @PostMapping("/luxury/available-rides")
+    @PostMapping("/lamilux/available-rides")
     public ResponseEntity<?> availabledrivers(@RequestBody DistanceMatrixRequestDTO distanceMatrixRequestDTO) throws Exception {
 
         session.setAttribute("startLocation", distanceMatrixRequestDTO.getStartLocation());
@@ -57,7 +57,7 @@ public class LuxResource extends Ride {
     }
 
 
-    @PostMapping("luxury/request-ride")
+    @PostMapping("lamilux/request-ride")
     public ResponseEntity<?> requestRide(@RequestBody UserLocationDTO userLocationDTO){
 
         String userStart = (String) session.getAttribute("startLocation");
