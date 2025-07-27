@@ -15,10 +15,15 @@ This project became a personal journey of growth, combining backend skills, data
 
 🛠️ Tech Stack
 Java 21
+
 Spring Boot
+
 Spring Data JPA (Hibernate)
+
 MySQL
+
 Docker & Docker Compose
+
 Maven
 
 ## Features
