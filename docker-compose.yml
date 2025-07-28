@@ -1,33 +1,33 @@
-version: '3.8'
+
 services:
-  mysql:
-    image: mysql:8
-    container_name: lami-mysql
+  lami-sql:
+    container_name: lami-sql
+    image: mysql
+    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Ona0nlin3SQL
       MYSQL_DATABASE: lami_db
       MYSQL_USER: lami
       MYSQL_PASSWORD: lamipassword
-    ports:
-      - "3307:3306"
+#    ports:
+#      - "3306:3306"
     networks:
       - lami-net
 
-  backend:
-    image: onaonline/lami-backend
+  lami-docker:
+    image: onaonline/lami-docker
     container_name: lami-docker
     ports:
       - "9090:9090"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://lami-mysql:3306/lami_db?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://lami-sql:3306/lami_db?useSSL=false&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: lami
       SPRING_DATASOURCE_PASSWORD: lamipassword
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
     depends_on:
-      - mysql
+      - lami-sql
     networks:
       - lami-net
-    command: sh -c "./wait-for-it.sh lami-mysql:3306 -- java -jar /app/lami-backend-0.0.1-SNAPSHOT.jar"
+#    command: sh -c "./wait-for-it.sh lami-sql:3306 -t 60 -- java -jar /app/lami-backend-0.0.1-SNAPSHOT.jar"
 
 networks:
   lami-net:
