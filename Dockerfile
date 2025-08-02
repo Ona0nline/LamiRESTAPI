@@ -1,5 +1,6 @@
 # Stage 1: Build the application
-FROM maven:3.9.6-eclipse-temurin-17 AS build
+FROM maven:3.9.6-eclipse-temurin-21 AS build
+
 
 WORKDIR /app
 COPY . .
@@ -11,7 +12,7 @@ RUN mvn clean package -DskipTests
 RUN ls -l /app/target
 
 # Stage 2: Run the application
-FROM eclipse-temurin:17-jdk
+FROM eclipse-temurin:21-jdk
 
 WORKDIR /app
 

@@ -4,6 +4,8 @@ import com.onaonline.lami.lami_backend.database.details.RoutesDetails;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeRequestDTO;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeResponseDTO;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeService;
+import com.onaonline.lami.lami_backend.externalApis.roads.RoadsRequestDTO;
+import com.onaonline.lami.lami_backend.externalApis.roads.RoadsService;
 import com.onaonline.lami.lami_backend.rideoptions.Ride;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,8 +30,10 @@ public class TaxiResource extends Ride {
 
     @Autowired
     private TaxiService taxiService;
+    @Autowired
+    private RoadsService roadsService;
 
-//
+    //
     @PostMapping("/taxi/ranks")
     public ResponseEntity<?> nearbyRanks(@RequestBody GeocodeRequestDTO geocodeRequestDTO) throws Exception {
 //        Purpose of this is only to find
@@ -57,6 +62,16 @@ public class TaxiResource extends Ride {
             }
         }
         return ResponseEntity.ok(routesDetails);
+    }
+
+    @PostMapping("taxi/ranks/routepath")
+    public ResponseEntity<?> specificRoute(@RequestBody RoadsRequestDTO roadsRequestDTO) throws Exception {
+        GeocodeResponseDTO startLocationGeocoded = geocodeService.geocodeAddress(roadsRequestDTO.getStartLocation());
+        GeocodeResponseDTO endLocationGeocoded = geocodeService.geocodeAddress(roadsRequestDTO.getEndLocation());
+
+        List<HashMap<String, Double>> path = roadsService.routePathCoords(startLocationGeocoded.getLatitude(), startLocationGeocoded.getLongitude(), endLocationGeocoded.getLatitude(), endLocationGeocoded.getLongitude());
+        return ResponseEntity.ok(path);
+
     }
 
 }

@@ -1,4 +1,4 @@
-package com.onaonline.lami.lami_backend.externalApis.geocoding;
+package com.onaonline.lami.lami_backend.externalApis;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

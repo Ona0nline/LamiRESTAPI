@@ -58,6 +58,10 @@ public class TaxiService {
                 routes.add(Map.of(
                         "id", route.getId(),
                         "startLocation",route.getStartLocation(),
+                        "startLat", route.getStartLat(),
+                        "startLong", route.getEndLat(),
+                        "endLat", route.getEndLat(),
+                        "endLong", route.getEndLong(),
                         "endLocation",route.getEndLocation(),
                         "fare",route.getFare(),
                         "rankID",route.getRankId()
