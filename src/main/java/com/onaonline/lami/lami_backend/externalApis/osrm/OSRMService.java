@@ -38,7 +38,7 @@ public class OSRMService {
         return "http://router.project-osrm.org/route/v1/driving/"
                 + geocodedStartLong + "," +geocodedStartLat
                 + ";" + geocodedEndLong + "," + geocodedEndLat
-                + "?geometries=geojson&overview=full";
+                + "?geometries=geojson&overview=false";
     }
 
 //    public static void main(String[] args) throws Exception {
