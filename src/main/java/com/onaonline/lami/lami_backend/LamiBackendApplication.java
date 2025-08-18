@@ -1,5 +1,6 @@
 package com.onaonline.lami.lami_backend;
 
+import com.onaonline.lami.lami_backend.externalApis.osrm.OSRMService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -9,7 +10,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 public class LamiBackendApplication {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		SpringApplication.run(LamiBackendApplication.class, args);
 	}
 

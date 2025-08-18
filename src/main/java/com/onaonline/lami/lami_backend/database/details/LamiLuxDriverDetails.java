@@ -19,6 +19,7 @@ public class LamiLuxDriverDetails {
     private String driveridnumber;
     private String phonenumber;
     private String email;
+    @Column(columnDefinition = "bit(1)")
     private boolean availiable;
     private String car;
     private String license_plate;

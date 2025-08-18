@@ -1,13 +1,17 @@
 package com.onaonline.lami.lami_backend.rideoptions.taxi;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onaonline.lami.lami_backend.database.details.LamiDriverDetails;
 import com.onaonline.lami.lami_backend.database.details.RoutesDetails;
 import com.onaonline.lami.lami_backend.database.details.TaxiRankDetails;
 import com.onaonline.lami.lami_backend.database.repos.RoutesRepository;
 import com.onaonline.lami.lami_backend.database.repos.TaxiRankRepository;
+import com.onaonline.lami.lami_backend.externalApis.osrm.OSRMService;
 import com.onaonline.lami.lami_backend.util.BoundingBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +22,25 @@ import java.util.Optional;
 public class TaxiService {
 
     @Autowired
+    private OSRMService osrmService;
+
+    @Autowired
+    private final RestTemplate restTemplate;
+    @Autowired
+    private final ObjectMapper objectMapper;
+
+    @Autowired
     private TaxiRankRepository taxiRankRepository;
 
     @Autowired
     private RoutesRepository routesRepository;
 
     private BoundingBox boundingBox = new BoundingBox();
+
+    public TaxiService(RestTemplate restTemplate, ObjectMapper objectMapper) {
+        this.restTemplate = restTemplate;
+        this.objectMapper = objectMapper;
+    }
 
     public ArrayList<Map<String, Object>> nearbyRanks(double startLocLat, double startLocLong){
         BoundingBox boundingBox1 = boundingBox.calculateBoundingBox(startLocLat,startLocLong,5);
@@ -71,5 +88,18 @@ public class TaxiService {
         }
 
         return routes;
+    }
+
+    public OsrmMetaData getOsrmMetaData(String start, String end) throws Exception {
+        String apiresponse = restTemplate.getForObject(osrmService.apiUrl2Points(start, end), String.class);
+        JsonNode root = objectMapper.readTree(apiresponse);
+        JsonNode routes = root.path("routes");
+        int weight = routes.get(0).get("legs").get(0).get("weight").asInt();
+        int duration = routes.get(0).get("legs").get(0).get("duration").asInt();
+        int distance = routes.get(0).get("legs").get(0).get("distance").asInt();
+
+        System.out.println("Full OSRM Response: " + root);
+
+        return new OsrmMetaData(weight,duration, distance);
     }
 }

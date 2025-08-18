@@ -1,9 +1,6 @@
 package com.onaonline.lami.lami_backend.database.details;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +14,7 @@ public class LamiDriverDetails {
     private String driveridnumber;
     private String phonenumber;
     private String email;
+    @Column(columnDefinition = "bit(1)")
     private boolean availiable;
     private String license_plate;
     private double latitude;

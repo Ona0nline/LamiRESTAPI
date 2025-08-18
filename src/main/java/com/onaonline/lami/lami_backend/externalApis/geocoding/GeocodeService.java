@@ -12,10 +12,8 @@ public class GeocodeService {
     @Value("${google.api.key}")
     private String apiKey;
 
-//  Spring class for making HTTP requests to other services.
     @Autowired
     private final RestTemplate restTemplate;
-//    convert between JSON and Java objects. Also  Google’s JSON response → GeocodeResponse object or JsonNode
     private final ObjectMapper objectMapper;
 
     public GeocodeService(RestTemplate restTemplate, ObjectMapper objectMapper) {
