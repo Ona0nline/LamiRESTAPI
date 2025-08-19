@@ -3,10 +3,11 @@ package com.onaonline.lami.lami_backend.rideoptions.taxi;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeRequestDTO;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeResponseDTO;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeService;
-import com.onaonline.lami.lami_backend.externalApis.osrm.OSRMDTO;
+import com.onaonline.lami.lami_backend.externalApis.osrm.OsrmPopulationDTO;
 import com.onaonline.lami.lami_backend.externalApis.osrm.OSRMService;
 import com.onaonline.lami.lami_backend.externalApis.roads.RoadsRequestDTO;
 import com.onaonline.lami.lami_backend.externalApis.roads.RoadsService;
+import com.onaonline.lami.lami_backend.rideoptions.LocationDTO;
 import com.onaonline.lami.lami_backend.rideoptions.Ride;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,9 @@ public class TaxiResource extends Ride {
         GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(geocodeRequestDTO.address);
         List<Map<String, Object>> nearbyTaxiRanks = taxiService.nearbyRanks(geocodeResponseDTO.getLatitude(), geocodeResponseDTO.getLongitude());
         session.setAttribute("nearbyRanks", nearbyTaxiRanks);
+        session.setAttribute("longitude", geocodeResponseDTO.getLongitude());
+        session.setAttribute("latitude", geocodeResponseDTO.getLatitude());
+
         return ResponseEntity.ok(nearbyTaxiRanks);
 
     }
@@ -78,11 +82,31 @@ public class TaxiResource extends Ride {
 
     }
 
-    @PostMapping("taxi/test")
-    public ResponseEntity<?> osrmTest(@RequestBody OSRMDTO osrmtestdto) throws Exception {
-        System.out.println(osrmService.getOsrmMetaData(osrmtestdto.getStart(), osrmtestdto.getEnd()));
+//    This was just to populate the database with snapped taxi rank routes
+    @PostMapping("taxi/population")
+    public ResponseEntity<?> osrmTest(@RequestBody OsrmPopulationDTO osrmtestdto) throws Exception {
         return ResponseEntity.ok(osrmService.getOsrmMetaData(osrmtestdto.getStart(), osrmtestdto.getEnd()));
 
     }
+
+//    taxi ranks that have routes that have my location within them.
+    @PostMapping("taxi/rankIds")
+    public ResponseEntity<?> rankIdsByProximity(@RequestBody LocationDTO locationDTO) throws Exception {
+        GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(locationDTO.getAddress());
+
+        session.setAttribute("longitude", geocodeResponseDTO.getLongitude());
+        session.setAttribute("latitude", geocodeResponseDTO.getLatitude());
+
+        System.out.println("Ranks?: " + taxiService.rankIdbyproximity(geocodeResponseDTO.getLongitude(), geocodeResponseDTO.getLatitude()));
+        return ResponseEntity.ok(taxiService.rankIdbyproximity(geocodeResponseDTO.getLongitude(), geocodeResponseDTO.getLatitude()));
+
+    }
+
+//    routes in the database that have my location within them
+//    @PostMapping("taxi/population")
+//    public ResponseEntity<?> osrmTest(@RequestBody OSRMDTO osrmtestdto) throws Exception {
+//        return ResponseEntity.ok(osrmService.getOsrmMetaData(osrmtestdto.getStart(), osrmtestdto.getEnd()));
+//
+//    }
 
 }

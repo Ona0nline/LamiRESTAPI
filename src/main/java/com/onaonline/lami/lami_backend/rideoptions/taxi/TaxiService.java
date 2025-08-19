@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onaonline.lami.lami_backend.database.details.RoutesDetails;
 import com.onaonline.lami.lami_backend.database.details.TaxiRankDetails;
+import com.onaonline.lami.lami_backend.database.repos.RouteRepository;
 import com.onaonline.lami.lami_backend.database.repos.RoutesRepository;
 import com.onaonline.lami.lami_backend.database.repos.TaxiRankRepository;
 import com.onaonline.lami.lami_backend.externalApis.osrm.OSRMService;
@@ -37,6 +38,9 @@ public class TaxiService {
 
     @Autowired
     private RoutesRepository routesRepository;
+
+    @Autowired
+    private RouteRepository routeRepository;
 
     private BoundingBox boundingBox = new BoundingBox();
 
@@ -91,6 +95,17 @@ public class TaxiService {
         }
 
         return routes;
+    }
+
+    public List<Long> rankIdbyproximity(double lon, double lat){
+        List<Long> rankIds = routeRepository.findRouteIdsContainingPoint(lon,lat);
+
+        if (rankIds.isEmpty()){
+            System.out.println("No taxi ranks that pass along your location.");
+        }
+
+        return rankIds;
+
     }
 
 

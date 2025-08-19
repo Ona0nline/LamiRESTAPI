@@ -101,13 +101,10 @@ public class RouteCLR implements CommandLineRunner {
                 // Call OSRM service for each destination
                 for (String destination : destinations) {
                     OsrmMetaData osrmMetaData = osrmService.getOsrmMetaData(taxiRank, destination);
-                    System.out.println("Routes: " + osrmService.getOsrmMetaData(taxiRank, destination));
 
                     Route metadata = new Route(osrmMetaData.getWeight(), osrmMetaData.getDistance(), osrmMetaData.getDuration(), osrmMetaData.getRouteCoords(), rankID);
-                    System.out.println("LineString before save: " + osrmMetaData.getRouteCoords().toText());
 
                     routeRepository.save(metadata);
-                    System.out.println("Saved route with ID: " + rankID);
 
                 }
 

@@ -12,14 +12,34 @@ import java.util.List;
 @Repository
 public interface RouteRepository extends JpaRepository<Route, Long> {
 
+
     @Query(
-            value = "SELECT id FROM routes WHERE ST_Contains(geom, point) OR ST_DWithin(geom::geography, point::geography, 1000)",
-            nativeQuery = true
+                    value = """
+        SELECT rank_id
+        FROM route 
+        WHERE ST_Contains(
+                  coordinates, 
+                  ST_SetSRID(ST_Point(:lon, :lat), 4326)
+              )
+           OR ST_DWithin(
+                  coordinates::geography, 
+                  ST_SetSRID(ST_Point(:lon, :lat), 4326)::geography, 
+                  1000
+              )
+        """,
+                    nativeQuery = true
+
     )
     List<Long> findRouteIdsContainingPoint(@Param("lon") double lon, @Param("lat") double lat);
 
     @Query(
-            value = "SELECT coords FROM routes WHERE ST_Contains(geom, point) OR ST_DWithin(geom::geography, point::geography, 1000)",
+            value = "SELECT coordinates FROM route WHERE ST_Contains(coordinates, T_Contains(\n" +
+                    "                  coordinates, \n" +
+                    "                  ST_SetSRID(ST_Point(:lon, :lat), 4326)\n" +
+                    "              )) OR ST_DWithin(coordinates::geography, T_Contains(\n" +
+                    "                  coordinates, \n" +
+                    "                  ST_SetSRID(ST_Point(:lon, :lat), 4326)\n" +
+                    "              )::geography, 1000)",
             nativeQuery = true
     )
     List<org.locationtech.jts.geom.LineString> findRoutesContainingPoint(@Param("lon") double lon, @Param("lat") double lat);
