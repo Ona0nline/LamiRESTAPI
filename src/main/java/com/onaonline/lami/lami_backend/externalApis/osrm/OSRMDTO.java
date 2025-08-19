@@ -1,4 +1,4 @@
-package com.onaonline.lami.lami_backend.rideoptions.taxi;
+package com.onaonline.lami.lami_backend.externalApis.osrm;
 
 import lombok.Data;
 

@@ -3,6 +3,7 @@ package com.onaonline.lami.lami_backend.rideoptions.taxi;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeRequestDTO;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeResponseDTO;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeService;
+import com.onaonline.lami.lami_backend.externalApis.osrm.OSRMDTO;
 import com.onaonline.lami.lami_backend.externalApis.osrm.OSRMService;
 import com.onaonline.lami.lami_backend.externalApis.roads.RoadsRequestDTO;
 import com.onaonline.lami.lami_backend.externalApis.roads.RoadsService;
@@ -79,8 +80,8 @@ public class TaxiResource extends Ride {
 
     @PostMapping("taxi/test")
     public ResponseEntity<?> osrmTest(@RequestBody OSRMDTO osrmtestdto) throws Exception {
-        System.out.println(taxiService.getOsrmMetaData(osrmtestdto.getStart(), osrmtestdto.getEnd()));
-        return ResponseEntity.ok(taxiService.getOsrmMetaData(osrmtestdto.getStart(), osrmtestdto.getEnd()));
+        System.out.println(osrmService.getOsrmMetaData(osrmtestdto.getStart(), osrmtestdto.getEnd()));
+        return ResponseEntity.ok(osrmService.getOsrmMetaData(osrmtestdto.getStart(), osrmtestdto.getEnd()));
 
     }
 

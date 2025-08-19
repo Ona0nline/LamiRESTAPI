@@ -1,9 +1,13 @@
 package com.onaonline.lami.lami_backend.externalApis.osrm;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeService;
 import org.apache.catalina.core.ApplicationContext;
+import org.locationtech.jts.geom.Coordinate;
+import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -38,14 +42,32 @@ public class OSRMService {
         return "http://router.project-osrm.org/route/v1/driving/"
                 + geocodedStartLong + "," +geocodedStartLat
                 + ";" + geocodedEndLong + "," + geocodedEndLat
-                + "?geometries=geojson&overview=false";
+                + "?geometries=geojson&overview=full";
     }
 
-//    public static void main(String[] args) throws Exception {
-//        String apiresponse = restTemplate.getForObject(apiUrl2Points("Braamfontein Johannesburg South Africa", "Wonderpark mall"), String.class);
-//        JsonNode root = objectMapper.readTree(apiresponse);
-//        JsonNode results = root.path("results");
-//
-//        System.out.println(results);
-//    }
+    public OsrmMetaData getOsrmMetaData(String start, String end) throws Exception {
+        String apiresponse = restTemplate.getForObject(apiUrl2Points(start, end), String.class);
+        JsonNode root = objectMapper.readTree(apiresponse);
+        JsonNode routes = root.path("routes");
+
+        int weight = routes.get(0).get("legs").get(0).get("weight").asInt();
+        int duration = routes.get(0).get("legs").get(0).get("duration").asInt();
+        int distance = routes.get(0).get("legs").get(0).get("distance").asInt();
+
+        GeometryFactory geometryFactory = new GeometryFactory();
+        JsonNode routeCoordinates = objectMapper.convertValue(routes.get(0).get("geometry").get("coordinates"), new TypeReference<>() {});
+        Coordinate[] coordinates = new Coordinate[routeCoordinates.size()];
+        for (int i = 0; i < routeCoordinates.size(); i++) {
+            double lon = routeCoordinates.get(i).get(0).asDouble();
+            double lat = routeCoordinates.get(i).get(1).asDouble();
+            coordinates[i] = new Coordinate(lon, lat);
+        }
+
+        LineString line = geometryFactory.createLineString(coordinates);
+        System.out.println("Full OSRM Response: " + routes);
+        System.out.println("Coordinates: " + routeCoordinates);
+
+        return new OsrmMetaData(weight,duration, distance, line);
+    }
+
 }

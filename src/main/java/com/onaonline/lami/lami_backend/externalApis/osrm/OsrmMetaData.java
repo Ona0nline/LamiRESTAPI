@@ -1,7 +1,8 @@
-package com.onaonline.lami.lami_backend.rideoptions.taxi;
+package com.onaonline.lami.lami_backend.externalApis.osrm;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.locationtech.jts.geom.LineString;
 
 @Data
 @AllArgsConstructor
@@ -9,4 +10,5 @@ public class OsrmMetaData {
     private int weight;
     private  int duration;
     private  int distance;
+    private LineString routeCoords;
 }
