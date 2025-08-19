@@ -105,8 +105,9 @@ public class RouteCLR implements CommandLineRunner {
 
                     Route metadata = new Route(osrmMetaData.getWeight(), osrmMetaData.getDistance(), osrmMetaData.getDuration(), osrmMetaData.getRouteCoords(), rankID);
                     System.out.println("LineString before save: " + osrmMetaData.getRouteCoords().toText());
+
                     routeRepository.save(metadata);
-                    System.out.println("Saved route with ID: " + metadata.getId());
+                    System.out.println("Saved route with ID: " + rankID);
 
                 }
 
