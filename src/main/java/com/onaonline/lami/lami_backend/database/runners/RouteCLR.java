@@ -103,7 +103,7 @@ public class RouteCLR implements CommandLineRunner {
                     OsrmMetaData osrmMetaData = osrmService.getOsrmMetaData(taxiRank, destination);
 
                     Route metadata = new Route(osrmMetaData.getWeight(), osrmMetaData.getDistance(), osrmMetaData.getDuration(), osrmMetaData.getRouteCoords(), rankID);
-
+                    routeRepository.delete(metadata);
                     routeRepository.save(metadata);
 
                 }
