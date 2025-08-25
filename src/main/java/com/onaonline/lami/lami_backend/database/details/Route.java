@@ -17,12 +17,14 @@ public class Route {
     private int weight;
     private int duration;
     private int distance;
-    private int rankId;
+    @ManyToOne
+    @JoinColumn(name = "rank_id")
+    private TaxiRanks rank;
 
     @Column(columnDefinition = "geometry(LineString, 4326)")
     private LineString coordinates;
 
-    public Route(int weight, int distance, int duration, LineString coordinates, int rankId) {
+    public Route(int weight, int distance, int duration, LineString coordinates, TaxiRanks rankId) {
         this.weight = weight;
         this.distance = distance;
         this.duration = duration;
@@ -30,7 +32,7 @@ public class Route {
         this.rankId = rankId;
     }
 
-    public Route() {
+    public Route(int weight, int distance, int duration, LineString routeCoords) {
 
     }
 }

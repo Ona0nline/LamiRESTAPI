@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Builder
-public class TaxiRankDetails {
+public class TaxiRanks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,7 +23,7 @@ public class TaxiRankDetails {
     private double longitude;
     private String province;
 
-    public TaxiRankDetails(String name, double latitude, double longitude, String province) {
+    public TaxiRanks(String name, double latitude, double longitude, String province) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;

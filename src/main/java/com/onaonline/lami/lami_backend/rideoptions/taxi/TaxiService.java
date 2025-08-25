@@ -1,19 +1,13 @@
 package com.onaonline.lami.lami_backend.rideoptions.taxi;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.onaonline.lami.lami_backend.database.details.RoutesDetails;
-import com.onaonline.lami.lami_backend.database.details.TaxiRankDetails;
+import com.onaonline.lami.lami_backend.database.details.TaxiRanks;
 import com.onaonline.lami.lami_backend.database.repos.RouteRepository;
 import com.onaonline.lami.lami_backend.database.repos.RoutesRepository;
 import com.onaonline.lami.lami_backend.database.repos.TaxiRankRepository;
 import com.onaonline.lami.lami_backend.externalApis.osrm.OSRMService;
-import com.onaonline.lami.lami_backend.externalApis.osrm.OsrmMetaData;
 import com.onaonline.lami.lami_backend.util.BoundingBox;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
-import org.locationtech.jts.geom.LineString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -51,12 +45,12 @@ public class TaxiService {
 
     public ArrayList<Map<String, Object>> nearbyRanks(double startLocLat, double startLocLong){
         BoundingBox boundingBox1 = boundingBox.calculateBoundingBox(startLocLat,startLocLong,5);
-        List<TaxiRankDetails> nearbyTaxiRanks = taxiRankRepository.findByLatitudeBetweenAndLongitudeBetween(boundingBox1.latMin,
+        List<TaxiRanks> nearbyTaxiRanks = taxiRankRepository.findByLatitudeBetweenAndLongitudeBetween(boundingBox1.latMin,
                 boundingBox1.latMax, boundingBox1.lonMin, boundingBox1.lonMax);
 
         ArrayList<Map<String, Object>> taxiRanks = new ArrayList<>();
 
-        for(TaxiRankDetails taxiRank : nearbyTaxiRanks){
+        for(TaxiRanks taxiRank : nearbyTaxiRanks){
             taxiRanks.add(
                     Map.of(
                             "id", taxiRank.getId(),

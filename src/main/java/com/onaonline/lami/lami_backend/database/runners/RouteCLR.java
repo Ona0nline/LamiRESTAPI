@@ -2,7 +2,9 @@ package com.onaonline.lami.lami_backend.database.runners;
 
 import com.onaonline.lami.lami_backend.LamiBackendApplication;
 import com.onaonline.lami.lami_backend.database.details.Route;
+import com.onaonline.lami.lami_backend.database.details.TaxiRanks;
 import com.onaonline.lami.lami_backend.database.repos.RouteRepository;
+import com.onaonline.lami.lami_backend.database.repos.TaxiRankRepository;
 import com.onaonline.lami.lami_backend.externalApis.osrm.OSRMService;
 import com.onaonline.lami.lami_backend.externalApis.osrm.OsrmMetaData;
 import com.onaonline.lami.lami_backend.rideoptions.taxi.TaxiService;
@@ -26,6 +28,9 @@ public class RouteCLR implements CommandLineRunner {
     @Autowired
     private RouteRepository routeRepository;
 
+    @Autowired
+    private TaxiRankRepository taxiRankRepository;
+
     public RouteCLR(TaxiService taxiService) {
         this.taxiService = taxiService;
     }
@@ -35,7 +40,7 @@ public class RouteCLR implements CommandLineRunner {
         Map<String, Map<String, List<String>>> taxiRanks = new HashMap<>();
 
         Map<String, List<String>> gautengRanks = new HashMap<>();
-        gautengRanks.put("MTN Noord", List.of("Sandton", "Rosebank", "Randburg"));
+        gautengRanks.put("MTN Taxi Rank", List.of("Sandton", "Rosebank", "Randburg"));
         taxiRanks.put("Gauteng", gautengRanks);
 
         Map<String, List<String>> limpopoRanks = new HashMap<>();
@@ -53,7 +58,7 @@ public class RouteCLR implements CommandLineRunner {
 
 
         Map<String, List<String>> fsRanks = new HashMap<>();
-        fsRanks.put("Bloemfontein Taxi Rank", List.of("Botshabelo", "Thaba Nchu", "Dewetsdorp"));
+        fsRanks.put("Bloemfontein CBD Rank", List.of("Botshabelo", "Thaba Nchu", "Dewetsdorp"));
         taxiRanks.put("Free State", fsRanks);
 
         Map<String, List<String>> ncRanks = new HashMap<>();
@@ -82,9 +87,6 @@ public class RouteCLR implements CommandLineRunner {
             secondValues.add(rankRoute.values());
         }
 
-        // RankID counter
-        int rankID = 1;
-
         for (Map.Entry<String, Map<String, List<String>>> provinceEntry : taxiRanks.entrySet()) {
             String province = provinceEntry.getKey();
             Map<String, List<String>> rankRoutes = provinceEntry.getValue();
@@ -93,23 +95,35 @@ public class RouteCLR implements CommandLineRunner {
 
             // Process each taxi rank in the province
             for (Map.Entry<String, List<String>> rankEntry : rankRoutes.entrySet()) {
-                String taxiRank = rankEntry.getKey();
+//                Getting list of rank names
+                String taxiRankName = rankEntry.getKey();
                 List<String> destinations = rankEntry.getValue();
 
-                System.out.println("Processing routes for " + taxiRank + " (RankID: " + rankID + "):");
+//                Find said rank name in db
+                Optional<TaxiRanks> optionaltaxiRank = taxiRankRepository.findByName(taxiRankName);
+                if(optionaltaxiRank.isPresent()){
+                    TaxiRanks taxiRank = optionaltaxiRank.get();
+                    System.out.println("Processing routes for " + taxiRank + " (RankID: " + taxiRank.getId() + "):");
 
-                // Call OSRM service for each destination
-                for (String destination : destinations) {
-                    OsrmMetaData osrmMetaData = osrmService.getOsrmMetaData(taxiRank, destination);
+                    // Call OSRM service for each destination
+                    for (String destination : destinations) {
+                        OsrmMetaData osrmMetaData = osrmService.getOsrmMetaData(taxiRankName, destination);
+                        Route metadata = new Route(osrmMetaData.getWeight(),
+                                osrmMetaData.getDistance(),
+                                osrmMetaData.getDuration(),
+                                osrmMetaData.getRouteCoords()
+                        );
 
-                    Route metadata = new Route(osrmMetaData.getWeight(), osrmMetaData.getDistance(), osrmMetaData.getDuration(), osrmMetaData.getRouteCoords(), rankID);
-                    routeRepository.delete(metadata);
-                    routeRepository.save(metadata);
+                        osrmMetaData.setTaxiRank(taxiRank);
+                        routeRepository.delete(metadata);
+                        routeRepository.save(metadata);
 
+                    }
+                } else{
+                    System.out.println("Requested Taxi Rank is not in the database");
                 }
 
-                // Increment rankID for the next taxi rank
-                rankID++;
+
             }
         }
 
