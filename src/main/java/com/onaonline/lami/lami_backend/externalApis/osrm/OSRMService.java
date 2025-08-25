@@ -3,6 +3,8 @@ package com.onaonline.lami.lami_backend.externalApis.osrm;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.onaonline.lami.lami_backend.database.details.TaxiRanks;
+import com.onaonline.lami.lami_backend.database.repos.TaxiRankRepository;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeService;
 import org.apache.catalina.core.ApplicationContext;
 import org.locationtech.jts.geom.Coordinate;
@@ -11,6 +13,8 @@ import org.locationtech.jts.geom.LineString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.Optional;
 
 @Service
 public class OSRMService {
@@ -21,6 +25,9 @@ public class OSRMService {
     private final ObjectMapper objectMapper;
     @Autowired
     private final GeocodeService geocodeService;
+
+    @Autowired
+    private TaxiRankRepository taxiRankRepository;
 
     @Autowired
     // Tell Spring: "Use THIS constructor for injection"
@@ -67,7 +74,11 @@ public class OSRMService {
         System.out.println("Full OSRM Response: " + routes);
         System.out.println("Coordinates: " + routeCoordinates);
 
-        return new OsrmMetaData(weight,duration, distance, line);
+        Optional<TaxiRanks> optionaltaxiRank = taxiRankRepository.findByName(start);
+        System.out.println("Taxi rank in db?: " + optionaltaxiRank.get().getName() + "id: " + optionaltaxiRank.get().getId());
+        TaxiRanks taxiRank = optionaltaxiRank.get();
+        return new OsrmMetaData(weight,duration, distance, line, taxiRank);
+
     }
 
 }

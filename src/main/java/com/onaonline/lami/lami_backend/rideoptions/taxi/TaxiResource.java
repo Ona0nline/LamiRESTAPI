@@ -1,5 +1,6 @@
 package com.onaonline.lami.lami_backend.rideoptions.taxi;
 
+import com.onaonline.lami.lami_backend.database.details.TaxiRanks;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeRequestDTO;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeResponseDTO;
 import com.onaonline.lami.lami_backend.externalApis.geocoding.GeocodeService;
@@ -90,15 +91,14 @@ public class TaxiResource extends Ride {
     }
 
 //    taxi ranks that have routes that have my location within them.
-    @PostMapping("taxi/rankIds")
-    public ResponseEntity<?> rankIdsByProximity(@RequestBody LocationDTO locationDTO) throws Exception {
+    @PostMapping("taxi/rankByCoverage")
+    public ResponseEntity<?> ranksByRouteCoverage(@RequestBody LocationDTO locationDTO) throws Exception {
         GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(locationDTO.getAddress());
 
         session.setAttribute("longitude", geocodeResponseDTO.getLongitude());
         session.setAttribute("latitude", geocodeResponseDTO.getLatitude());
 
-        System.out.println("Ranks?: " + taxiService.rankIdbyproximity(geocodeResponseDTO.getLongitude(), geocodeResponseDTO.getLatitude()));
-        return ResponseEntity.ok(taxiService.rankIdbyproximity(geocodeResponseDTO.getLongitude(), geocodeResponseDTO.getLatitude()));
+        return ResponseEntity.ok(taxiService.ranksByRouteCoverage(geocodeResponseDTO.getLongitude(), geocodeResponseDTO.getLatitude()));
 
     }
 

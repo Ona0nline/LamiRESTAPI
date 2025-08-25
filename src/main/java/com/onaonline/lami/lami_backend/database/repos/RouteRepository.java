@@ -1,6 +1,7 @@
 package com.onaonline.lami.lami_backend.database.repos;
 
 import com.onaonline.lami.lami_backend.database.details.Route;
+import com.onaonline.lami.lami_backend.database.details.TaxiRanks;
 import org.geolatte.geom.LineString;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -44,4 +45,5 @@ public interface RouteRepository extends JpaRepository<Route, Long> {
     )
     List<org.locationtech.jts.geom.LineString> findRoutesContainingPoint(@Param("lon") double lon, @Param("lat") double lat);
 
+    void deleteAllByRankId(TaxiRanks taxiRank);
 }

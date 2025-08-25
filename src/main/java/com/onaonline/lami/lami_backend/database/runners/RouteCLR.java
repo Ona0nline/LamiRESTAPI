@@ -45,7 +45,7 @@ public class RouteCLR implements CommandLineRunner {
 
         Map<String, List<String>> limpopoRanks = new HashMap<>();
         limpopoRanks.put("Polokwane Taxi Rank", List.of("Seshego", "Lebowakgomo", "Mankweng"));
-        limpopoRanks.put("Thohoyandou Taxi Rank", List.of("Louis Trichardt", "Giyani", "Elim"));
+        limpopoRanks.put("Thohoyandou Taxi Rank", List.of("Louis Trichardt", "Giyani"));
         taxiRanks.put("Limpopo", limpopoRanks);
 
         Map<String, List<String>> KZNRanks = new HashMap<>();
@@ -103,21 +103,18 @@ public class RouteCLR implements CommandLineRunner {
                 Optional<TaxiRanks> optionaltaxiRank = taxiRankRepository.findByName(taxiRankName);
                 if(optionaltaxiRank.isPresent()){
                     TaxiRanks taxiRank = optionaltaxiRank.get();
-                    System.out.println("Processing routes for " + taxiRank + " (RankID: " + taxiRank.getId() + "):");
+                    System.out.println("Processing routes for " + taxiRank.getName() + " (RankID: " + taxiRank.getId() + "):");
 
                     // Call OSRM service for each destination
                     for (String destination : destinations) {
                         OsrmMetaData osrmMetaData = osrmService.getOsrmMetaData(taxiRankName, destination);
-                        Route metadata = new Route(osrmMetaData.getWeight(),
+                        Route route = new Route(osrmMetaData.getWeight(),
                                 osrmMetaData.getDistance(),
                                 osrmMetaData.getDuration(),
-                                osrmMetaData.getRouteCoords()
+                                osrmMetaData.getRouteCoords(),
+                                taxiRank
                         );
-
-                        osrmMetaData.setTaxiRank(taxiRank);
-                        routeRepository.delete(metadata);
-                        routeRepository.save(metadata);
-
+                        routeRepository.save(route);
                     }
                 } else{
                     System.out.println("Requested Taxi Rank is not in the database");

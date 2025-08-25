@@ -91,14 +91,20 @@ public class TaxiService {
         return routes;
     }
 
-    public List<Long> rankIdbyproximity(double lon, double lat){
+    public List<TaxiRanks> ranksByRouteCoverage(double lon, double lat){
         List<Long> rankIds = routeRepository.findRouteIdsContainingPoint(lon,lat);
+        List<TaxiRanks> foundRanks = new ArrayList<>();
 
         if (rankIds.isEmpty()){
             System.out.println("No taxi ranks that pass along your location.");
         }
 
-        return rankIds;
+        for(Long rank_id : rankIds){
+            TaxiRanks taxiRank = taxiRankRepository.findTaxiRanksById(rank_id);
+            foundRanks.add(taxiRank);
+        }
+
+        return foundRanks;
 
     }
 
