@@ -39,14 +39,14 @@ public class RouteCLR implements CommandLineRunner {
     public void getTaxiMetaData() throws Exception {
         Map<String, Map<String, List<String>>> taxiRanks = new HashMap<>();
 
-        Map<String, List<String>> gautengRanks = new HashMap<>();
-        gautengRanks.put("MTN Taxi Rank", List.of("Sandton", "Rosebank", "Randburg"));
-        taxiRanks.put("Gauteng", gautengRanks);
+//        Map<String, List<String>> gautengRanks = new HashMap<>();
+//        gautengRanks.put("MTN Taxi Rank", List.of("Sandton", "Rosebank", "Randburg"));
+//        taxiRanks.put("Gauteng", gautengRanks);
 
         Map<String, List<String>> limpopoRanks = new HashMap<>();
-        limpopoRanks.put("Polokwane Taxi Rank", List.of("Seshego", "Lebowakgomo", "Mankweng"));
-        limpopoRanks.put("Thohoyandou Taxi Rank", List.of("Louis Trichardt", "Giyani"));
-        taxiRanks.put("Limpopo", limpopoRanks);
+//        limpopoRanks.put("Polokwane Taxi Rank", List.of("Seshego", "Lebowakgomo", "Mankweng"));
+//        limpopoRanks.put("Thohoyandou Taxi Rank", List.of("Louis Trichardt", "Giyani"));
+//        taxiRanks.put("Limpopo", limpopoRanks);
 
         Map<String, List<String>> KZNRanks = new HashMap<>();
         KZNRanks.put("Tonggaat Taxi Rank", List.of("Durban Station", "Ballito", "Umhlanga"));
@@ -57,16 +57,16 @@ public class RouteCLR implements CommandLineRunner {
         taxiRanks.put("Eastern Cape", ecRanks);
 
 
-        Map<String, List<String>> fsRanks = new HashMap<>();
-        fsRanks.put("Bloemfontein CBD Rank", List.of("Botshabelo", "Thaba Nchu", "Dewetsdorp"));
-        taxiRanks.put("Free State", fsRanks);
+//        Map<String, List<String>> fsRanks = new HashMap<>();
+//        fsRanks.put("Bloemfontein CBD Rank", List.of("Botshabelo", "Thaba Nchu", "Dewetsdorp"));
+//        taxiRanks.put("Free State", fsRanks);
 
-        Map<String, List<String>> ncRanks = new HashMap<>();
-        ncRanks.put("Upington Taxi Rank", List.of("Keimoes", "Kakamas", "Groblershoop"));
-        taxiRanks.put("Northern Cape", ncRanks);
+//        Map<String, List<String>> ncRanks = new HashMap<>();
+//        ncRanks.put("Upington Taxi Rank", List.of("Keimoes", "Kakamas", "Groblershoop"));
+//        taxiRanks.put("Northern Cape", ncRanks);
 
         Map<String, List<String>> nwRanks = new HashMap<>();
-        nwRanks.put("Rustenburg Taxi Rank", List.of("Brits", "Koster", "Swartruggens"));
+//        nwRanks.put("Rustenburg Taxi Rank", List.of("Brits", "Koster", "Swartruggens"));
         nwRanks.put("Mahikeng Taxi Rank", List.of("Zeerust", "Lichtenburg", "Vryburg"));
         taxiRanks.put("North West", nwRanks);
 

@@ -1,6 +1,5 @@
-package com.onaonline.lami.lami_backend.user;
+package com.onaonline.lami.lami_backend.authentication;
 
-import com.onaonline.lami.lami_backend.database.details.RideDetailsLami;
 import com.onaonline.lami.lami_backend.database.details.UserDetails;
 
 import com.onaonline.lami.lami_backend.database.repos.UserRepository;
@@ -8,7 +7,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -48,7 +46,7 @@ public class UserValidationService {
 
     }
 
-
+//    I think after loggin in, return the user details
     public boolean login(String email, String password) {
 
         Optional<UserDetails> optionalemail = userRepository.findByEmail(email);

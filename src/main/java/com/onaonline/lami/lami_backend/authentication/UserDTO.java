@@ -1,4 +1,4 @@
-package com.onaonline.lami.lami_backend.user;
+package com.onaonline.lami.lami_backend.authentication;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;

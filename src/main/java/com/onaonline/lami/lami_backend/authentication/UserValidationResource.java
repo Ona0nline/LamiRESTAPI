@@ -1,9 +1,9 @@
-package com.onaonline.lami.lami_backend.user;
+package com.onaonline.lami.lami_backend.authentication;
 
-import com.onaonline.lami.lami_backend.database.details.RideDetailsLami;
 import com.onaonline.lami.lami_backend.database.details.UserDetails;
 import com.onaonline.lami.lami_backend.rideoptions.lami.LamiService;
 import com.onaonline.lami.lami_backend.rideoptions.lux.LuxuryService;
+import com.onaonline.lami.lami_backend.util.JWT;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
+
 import java.util.Map;
 
 @RestController
@@ -52,8 +54,8 @@ public class UserValidationResource {
     public ResponseEntity<String> login(@Valid @RequestBody LoginDTO loginDTO){
 //    Response entity returns http responses (status, headers and body)
         if(homeService.login(loginDTO.getEmail(), loginDTO.getPassword())){
-            session.setAttribute("email", loginDTO.getEmail());
-            return ResponseEntity.ok("Login Successful");
+            String token = JWT.generateToken(loginDTO.getEmail());
+            return ResponseEntity.ok(token);
         }
         return ResponseEntity.status(401).body("Unauthorized login");
 
