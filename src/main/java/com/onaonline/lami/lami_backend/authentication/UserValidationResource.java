@@ -62,16 +62,21 @@ public class UserValidationResource {
     }
 
 
-    @PostMapping("/profile")
-//    ? placeholder for any object
-    public ResponseEntity<?> profile(@Valid @RequestBody LoginDTO loginDTO) {
-        boolean loginState = homeService.login(loginDTO.getEmail(), loginDTO.getPassword());
-        if (loginState) {
-            UserDetails user = homeService.profileview(loginDTO.getEmail());
-            return ResponseEntity.ok(user);
-
+    @GetMapping("/profile")
+    public ResponseEntity<?> profile(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Missing token");
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed or user not found.");
+
+        String token = authHeader.substring(7); // remove "Bearer "
+        String email = JWT.validateTokenAndGetEmail(token);
+        System.out.println("User email according to token: " + email);
+        if(email != null){
+            UserDetails user = homeService.profileview(email);
+            return ResponseEntity.ok(user);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email");
+
 
     }
 
