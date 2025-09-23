@@ -25,6 +25,7 @@ public class RoutesDetails {
     private String endLocation;
     private double endLat;
     private double endLong;
+
     @CollectionTable(name = "route_path_points", joinColumns = @JoinColumn(name = "route_id"))
     @ElementCollection(fetch = FetchType.EAGER)
     private List<LatLng> linespath;

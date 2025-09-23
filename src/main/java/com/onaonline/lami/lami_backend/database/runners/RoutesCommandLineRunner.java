@@ -3,6 +3,9 @@ package com.onaonline.lami.lami_backend.database.runners;
 import com.onaonline.lami.lami_backend.database.details.RoutesDetails;
 import com.onaonline.lami.lami_backend.database.repos.RoutesRepository;
 import com.onaonline.lami.lami_backend.util.LatLng;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -10,6 +13,8 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
+
+@Transactional
 @Component
 public class RoutesCommandLineRunner implements CommandLineRunner {
 

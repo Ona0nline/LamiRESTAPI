@@ -70,7 +70,6 @@ public class UserValidationResource {
 
         String token = authHeader.substring(7); // remove "Bearer "
         String email = JWT.validateTokenAndGetEmail(token);
-        System.out.println("User email according to token: " + email);
         if(email != null){
             UserDetails user = homeService.profileview(email);
             return ResponseEntity.ok(user);
@@ -81,14 +80,20 @@ public class UserValidationResource {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> update(@Valid @RequestBody UpdateDTO updateDTO){
-        boolean loginState = homeService.login(updateDTO.getEmail(), updateDTO.getPassword());
-        if (loginState) {
-            String tochange = homeService.update(updateDTO.getEmail(),updateDTO.getTochange(), updateDTO.getValue());
-            return ResponseEntity.ok("Successfully changed the " + tochange );
-
+    public ResponseEntity<?> update(@RequestBody UpdateDTO updateDTO, @RequestHeader("Authorization") String authHeader){
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Missing token");
         }
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Login failed or user not found.");
+
+        String token = authHeader.substring(7); // remove "Bearer "
+        String email = JWT.validateTokenAndGetEmail(token);
+
+        if(email != null){
+            String tochange = homeService.update(updateDTO.getTochange(),email, updateDTO.getValue());
+            System.out.println("Success");
+            return ResponseEntity.ok("Successfully changed the " + tochange );
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid email");
 
     }
 
