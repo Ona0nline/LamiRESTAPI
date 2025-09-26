@@ -20,17 +20,13 @@ public class UserDetails {
     private String username;
     private String email;
     private String phone_number;
-
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private double latitude;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private double longitude;
-    private String placeName;
+    private String latitude;
+    private String longitude;
 
 
-    public UserDetails(Long id,String username, String email, String phone_number, String password, double latitude, double longitude, String placeName) {
+    public UserDetails(Long id,String username, String email, String phone_number, String password, String latitude, String longitude) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -38,7 +34,6 @@ public class UserDetails {
         this.password = password;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.placeName = placeName;
     }
 
     public UserDetails() {

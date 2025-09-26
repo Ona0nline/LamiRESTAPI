@@ -26,12 +26,10 @@ public class SignUpDTO {
         private String password;
         @NotBlank
         private String confirmPassword;
-        @NotNull
-        private double latitude;
-        @NotNull
-        private double longitude;
-        @NotNull
-        private String placeName;
+        @NotBlank
+        private String latitude;
+        @NotBlank
+        private String longitude;
 
         @AssertTrue(message = "Passwords must match")
         public boolean isPasswordMatching(){

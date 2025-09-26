@@ -9,6 +9,5 @@ public class UserCommandLineRunner implements Runnable {
     @Override
     public void run() {
 
-
     }
 }

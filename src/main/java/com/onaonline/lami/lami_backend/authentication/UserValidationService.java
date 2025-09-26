@@ -42,8 +42,9 @@ public class UserValidationService {
                     username(signuprequest.getUsername())
                     .email(signuprequest.getEmail())
                     .phone_number(signuprequest.getPhone_number())
-                    .password(signuprequest.getPassword()).latitude(signuprequest.getLatitude())
-                            .longitude(signuprequest.getLongitude()).placeName(signuprequest.getPlaceName()).build();
+                    .password(signuprequest.getPassword())
+                    .latitude(signuprequest.getLatitude())
+                    .longitude(signuprequest.getLongitude()).build();
 
             userRepository.save(user);
         }
@@ -107,7 +108,6 @@ public class UserValidationService {
         return user.get().getId();
 
     }
-
 
 
 }

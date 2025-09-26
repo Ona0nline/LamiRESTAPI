@@ -25,11 +25,7 @@ public class UserDTO {
     private String password;
     @NotBlank(message = "User location is needed.")
     @NotNull
-    private double latitude;
-    @NotNull
-    private double longitude;
-    @NotNull
-    private String placeName;
+    private String userLocation;
 
 
 }
