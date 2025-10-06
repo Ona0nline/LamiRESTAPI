@@ -39,16 +39,17 @@ public class LamiResource extends Ride {
     public ResponseEntity<Object> availablerides(@RequestBody DistanceMatrixRequestDTO distanceMatrixRequestDTO) throws Exception {
 
 //        Users start and end locations in a session
-        session.setAttribute("startLocation", distanceMatrixRequestDTO.getStartLocation());
-        session.setAttribute("endLocation", distanceMatrixRequestDTO.getEndLocation());
+        session.setAttribute("startLocation", distanceMatrixRequestDTO.getStartAddress());
+        session.setAttribute("endLocation", distanceMatrixRequestDTO.getEndAddress());
 
-        DistanceMatrixResponseDTO distanceMatrixResponse = distanceMatrixService.distanceCalculatorLami(distanceMatrixRequestDTO.getStartLocation(),distanceMatrixRequestDTO.getEndLocation());
+        DistanceMatrixResponseDTO distanceMatrixResponse = distanceMatrixService.distanceCalculatorLami(distanceMatrixRequestDTO.getStartAddress(),distanceMatrixRequestDTO.getEndAddress());
         session.setAttribute("fare", distanceMatrixResponse.getFare());
-        GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(distanceMatrixRequestDTO.getStartLocation());
+//        GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(distanceMatrixRequestDTO.getStartAddress());
         System.out.println(distanceMatrixResponse);
-        List<Map<String, Object>> results = lamiService.displayavailablerides(geocodeResponseDTO.getLatitude(),geocodeResponseDTO.getLongitude());
 
-        AvailableRidesResponseDTO availableRidesResponse = new AvailableRidesResponseDTO(distanceMatrixResponse,results, distanceMatrixRequestDTO.getStartLocation(), distanceMatrixRequestDTO.getEndLocation());
+        List<Map<String, Object>> results = lamiService.displayavailablerides(distanceMatrixRequestDTO.getStartLatitude(), distanceMatrixRequestDTO.getStartLongitude());
+
+        AvailableRidesResponseDTO availableRidesResponse = new AvailableRidesResponseDTO(distanceMatrixResponse,results, distanceMatrixRequestDTO.getStartAddress(), distanceMatrixRequestDTO.getEndAddress());
         if (results.isEmpty()) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(availableRidesResponse);
     }

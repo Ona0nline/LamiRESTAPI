@@ -4,11 +4,11 @@ import lombok.Data;
 
 @Data
 public class DistanceMatrixRequestDTO {
-    private String startLocation;
-    private String endLocation;
-    private String lat;
-    private String lon;
-    private double luxFare;
+    private String startAddress;
+    private String endAddress;
+    private double startLatitude;
+    private double startLongitude;
+//    private double luxFare;
 
 
 }

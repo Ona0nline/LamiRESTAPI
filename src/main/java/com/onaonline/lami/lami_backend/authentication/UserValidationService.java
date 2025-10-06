@@ -43,8 +43,7 @@ public class UserValidationService {
                     .email(signuprequest.getEmail())
                     .phone_number(signuprequest.getPhone_number())
                     .password(signuprequest.getPassword())
-                    .latitude(signuprequest.getLatitude())
-                    .longitude(signuprequest.getLongitude()).build();
+                    .build();
 
             userRepository.save(user);
         }

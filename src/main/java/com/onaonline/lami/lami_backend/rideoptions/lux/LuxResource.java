@@ -40,18 +40,18 @@ public class LuxResource extends Ride {
     @PostMapping("/lamilux/available-rides")
     public ResponseEntity<?> availabledrivers(@RequestBody DistanceMatrixRequestDTO distanceMatrixRequestDTO) throws Exception {
 
-        session.setAttribute("startLocation", distanceMatrixRequestDTO.getStartLocation());
-        session.setAttribute("endLocation", distanceMatrixRequestDTO.getEndLocation());
+        session.setAttribute("startLocation", distanceMatrixRequestDTO.getStartAddress());
+        session.setAttribute("endLocation", distanceMatrixRequestDTO.getEndAddress());
 
 //        Literally just distance and duration
-        DistanceMatrixLuxResponseDTO distanceMatrixResponseLux = distanceMatrixService.distanceCalculatorLux(distanceMatrixRequestDTO.getStartLocation(),distanceMatrixRequestDTO.getEndLocation());
+        DistanceMatrixLuxResponseDTO distanceMatrixResponseLux = distanceMatrixService.distanceCalculatorLux(distanceMatrixRequestDTO.getStartAddress(),distanceMatrixRequestDTO.getEndAddress());
         System.out.println(distanceMatrixResponseLux);
 //        NB: THIS FARE == ride-sharing fair, not car/service fare
         session.setAttribute("fare", distanceMatrixResponseLux.getFare());
-        GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(distanceMatrixRequestDTO.getStartLocation());
+        GeocodeResponseDTO geocodeResponseDTO = geocodeService.geocodeAddress(distanceMatrixRequestDTO.getStartAddress());
 
         List<Map<String, Object>> results = luxuryService.displayavailablerides(geocodeResponseDTO.getLatitude(),geocodeResponseDTO.getLongitude());
-        AvailableRidesLuxResponseDTO availableRidesResponse = new AvailableRidesLuxResponseDTO(distanceMatrixResponseLux,results, distanceMatrixRequestDTO.getStartLocation(), distanceMatrixRequestDTO.getEndLocation());
+        AvailableRidesLuxResponseDTO availableRidesResponse = new AvailableRidesLuxResponseDTO(distanceMatrixResponseLux,results, distanceMatrixRequestDTO.getStartAddress(), distanceMatrixRequestDTO.getEndAddress());
         if (results.isEmpty()) return ResponseEntity.ok("List empty");
         return ResponseEntity.ok(availableRidesResponse);
     }
