@@ -40,6 +40,7 @@ public class DistanceMatrixService {
 
         String apiresponse = restTemplate.getForObject(apiUrl(startLocation,endLocation), String.class);
         JsonNode root = objectMapper.readTree(apiresponse);
+        System.out.println(root);
         JsonNode element = root
                 .path("rows")
                 .get(0)
